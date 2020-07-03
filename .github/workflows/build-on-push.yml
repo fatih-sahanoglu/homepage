@@ -35,6 +35,9 @@ jobs:
 
       - name: Predeploy
         run: yarn predeploy
+        env:
+          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+          CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
