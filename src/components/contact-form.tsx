@@ -38,14 +38,11 @@ const Textarea = styled.textarea`
 
 export default class ContactForm extends React.Component<Props, State> {
 	public state = {
-		status
+		status: ""
 	};
 	constructor(props) {
 		super(props);
 		this.submitForm = this.submitForm.bind(this);
-		this.state = {
-			status: ""
-		};
 	}
 
 	render() {
