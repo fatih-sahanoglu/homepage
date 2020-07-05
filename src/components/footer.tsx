@@ -36,9 +36,8 @@ export const Footer: React.FC = () => (
 					</Column>
 					<Column m={4} l={3} raw>
 						<Nav>
-							<Link to="/impressum/">Impressum</Link>
 							<Link to="/contact/">Contact</Link>
-							<Link to="/location/">Location</Link>
+							<Link to="/impressum/">Impressum</Link>
 						</Nav>
 					</Column>
 					<Column m={4} l={3} raw>
