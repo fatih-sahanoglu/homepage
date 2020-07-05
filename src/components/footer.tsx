@@ -43,8 +43,12 @@ export const Footer: React.FC = () => (
 					</Column>
 					<Column m={4} l={3} raw>
 						<Nav>
-							<Link to="https://facebook.com">Facebook</Link>
-							<Link to="https://instagram.com">Instagram</Link>
+							<a href="https://facebook.com" target="_blank">
+								Facebook
+							</a>
+							<a href="https://instagram.com" target="_blank">
+								Instagram
+							</a>
 						</Nav>
 					</Column>
 				</Row>
