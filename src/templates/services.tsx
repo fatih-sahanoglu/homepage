@@ -125,6 +125,11 @@ export default ServicesTemplate;
 
 export const pageQuery = graphql`
 	query ServicesBySlug($slug: String!) {
+		site {
+			siteMetadata {
+				title
+			}
+		}
 		contentfulServices(slug: {eq: $slug}) {
 			title
 			name

@@ -75,6 +75,11 @@ export default GalleryIndex;
 
 export const pageQuery = graphql`
 	query GalleryIndexQuery {
+		site {
+			siteMetadata {
+				title
+			}
+		}
 		allContentfulGallery(filter: {showInGallery: {eq: true}}) {
 			edges {
 				node {

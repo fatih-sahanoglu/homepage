@@ -148,6 +148,11 @@ export default ProductTemplate;
 
 export const pageQuery = graphql`
 	query ProductBySlug($slug: String!) {
+		site {
+			siteMetadata {
+				title
+			}
+		}
 		contentfulProduct(slug: {eq: $slug}) {
 			id
 			title

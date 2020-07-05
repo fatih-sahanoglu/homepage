@@ -1,15 +1,15 @@
 import React from "react";
-import styled, {createGlobalStyle} from "styled-components";
+import styled, {createGlobalStyle, ThemeProvider} from "styled-components";
 import Navigation from "./navigation";
 import {theme} from "../theme/theme";
-import {ThemeProvider} from "styled-components";
 import {GridOverlay} from "./grid/GridOverlay";
 import {SpacingOverlay} from "./spacing/debugger";
-import {Column, Grid, GridProvider, Row, Stage} from "./grid";
-import {Link, withPrefix} from "gatsby";
+import {Column, Grid, GridProvider, Row} from "./grid";
+import {withPrefix} from "gatsby";
 import Helmet from "react-helmet";
 import {GRID} from "../theme/grid";
 import {Spacing} from "./spacing";
+import {Footer} from "./footer";
 
 const GlobalStyle = createGlobalStyle`
 	@font-face {
@@ -76,57 +76,6 @@ const WithDebuggers: React.FC = ({children}) =>
 			<SpacingOverlay>{children}</SpacingOverlay>
 		</>
 	);
-
-const Nav = styled.nav`
-	display: flex;
-	flex-direction: column;
-`;
-
-const FooterStage = styled(Stage)`
-	background: black;
-	color: white;
-`;
-
-export const Footer: React.FC = () => (
-	<>
-		<Spacing size="l" />
-		<FooterStage>
-			<Spacing size="l" />
-			<Grid>
-				<Row>
-					<Column m={4} l={3} raw>
-						<Nav>
-							<Link to="/services/gentlemen">Gentlemen</Link>
-							<Link to="/services/ladies">Ladies</Link>
-							<Link to="/services/youngsters">Youngsters</Link>
-							<Link to="/services/beauty">Beauty</Link>
-							<Link to="/products/">Products</Link>
-						</Nav>
-					</Column>
-					<Column m={4} l={3} raw>
-						<Nav>
-							<Link to="/about/">About</Link>
-							<Link to="/gallery/">Gallery</Link>
-						</Nav>
-					</Column>
-					<Column m={4} l={3} raw>
-						<Nav>
-							<Link to="/location/">Location</Link>
-							<Link to="/blog/">Blog</Link>
-						</Nav>
-					</Column>
-					<Column m={4} l={3} raw>
-						<Nav>
-							<Link to="https://facebook.com">Facebook</Link>
-							<Link to="https://instagram.com">Instagram</Link>
-						</Nav>
-					</Column>
-				</Row>
-			</Grid>
-			<Spacing size="m" />
-		</FooterStage>
-	</>
-);
 
 const MainGrid = styled(Grid).attrs({
 	overflow: true

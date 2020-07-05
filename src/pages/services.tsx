@@ -34,6 +34,11 @@ export default ServicesIndex;
 
 export const pageQuery = graphql`
 	query ServicesIndexQuery {
+		site {
+			siteMetadata {
+				title
+			}
+		}
 		allContentfulServices {
 			edges {
 				node {

@@ -66,6 +66,11 @@ export default GalleryTemplate;
 
 export const pageQuery = graphql`
 	query GalleryBySlug($slug: String!) {
+		site {
+			siteMetadata {
+				title
+			}
+		}
 		contentfulGallery(slug: {eq: $slug}) {
 			id
 			title

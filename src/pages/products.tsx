@@ -52,6 +52,11 @@ export default ProductsIndex;
 
 export const pageQuery = graphql`
 	query ProductsIndexQuery {
+		site {
+			siteMetadata {
+				title
+			}
+		}
 		allContentfulProduct {
 			edges {
 				node {
