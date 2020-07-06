@@ -1,5 +1,5 @@
 import React from "react";
-import {graphql, Link} from "gatsby";
+import {graphql} from "gatsby";
 import get from "lodash/get";
 import Helmet from "react-helmet";
 import Layout from "../components/layout";
@@ -7,8 +7,9 @@ import ArticlePreview from "../components/article-preview";
 import {Column, Row} from "../components/grid";
 import GatsbyImage from "gatsby-image";
 import styled from "styled-components";
+import {Person} from "../components/person";
 
-const ImgWrapper = styled.div`
+export const ImgWrapper = styled.div`
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -18,21 +19,10 @@ const ImgWrapper = styled.div`
 	overflow: hidden;
 `;
 
-const Avatar = styled.div`
+export const Avatar = styled.div`
 	position: relative;
 	padding-bottom: 100%;
 	width: 100%;
-`;
-
-const Person = styled.div`
-	position: sticky;
-	top: ${({
-		theme: {
-			components: {
-				header: {minHeight}
-			}
-		}
-	}) => `${minHeight}px`};
 `;
 
 class BlogIndex extends React.Component {
@@ -90,6 +80,8 @@ export const pageQuery = graphql`
 					slug
 					publishDate(formatString: "MMMM Do, YYYY")
 					heroImage {
+						title
+						description
 						fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: THUMB) {
 							...GatsbyContentfulFluid_withWebp
 						}

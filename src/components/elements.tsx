@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import {Stretch} from "./spacing/stretch";
 import {Spacing} from "./spacing";
 import GatsbyImage from "gatsby-image";
+import {CustomMap} from "./map";
 
 export const Img = styled(GatsbyImage)`
 	position: absolute;
@@ -64,9 +65,7 @@ export const AbsoluteGrid = styled(Grid)`
 	z-index: 1;
 	visibility: hidden;
 `;
-export const Big = styled.span`
-	font-size: 2em;
-`;
+
 export const colors = {
 	red: "hsl(0, 30%, 20%)",
 	orange: "hsl(30, 30%, 20%)",
@@ -148,10 +147,25 @@ export const components = {
 			</Row>
 		);
 	},
+	ContentfulGallery: ({images}) => {
+		return (
+			<Row>
+				{images.map((image, i) => (
+					<Column key={image.id} m={4} l={(i % 3) + 5}>
+						<Img fluid={image.fluid} />
+					</Column>
+				))}
+			</Row>
+		);
+	},
+	ContentfulLocation: ({location}) => {
+		return <CustomMap lat={location.lat} lon={location.lon} />;
+	},
 	error: () => <div>Error</div>
 };
 
 export const Contentful: React.FC<{contentType}> = ({contentType, ...props}) => {
+	console.log(contentType, props);
 	const Component = components[contentType] || components.error;
 	return <Component {...props} />;
 };

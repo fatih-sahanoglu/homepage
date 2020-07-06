@@ -8,6 +8,9 @@ import ReactMarkdown from "react-markdown";
 import {Spacing} from "../components/spacing";
 import styled from "styled-components";
 import {Column, GUTTER, Row} from "../components/grid";
+import {Person} from "../components/person";
+import GatsbyImage from "gatsby-image";
+import {Avatar, ImgWrapper} from "../pages/blog";
 
 const MDImg = styled.img`
 	width: calc(50% - var(${GUTTER}) * 1px);
@@ -31,18 +34,33 @@ class BlogPostTemplate extends React.Component {
 				<Helmet title={`${post.title} | ${siteTitle}`} />
 				<Row>
 					<Column raw>
-						<h1>{post.title}</h1>
-						<small>
-							by {post.author.name} on {post.publishDate}
-						</small>
-						<br />
-						<small>
-							Time to read:{" "}
-							<strong>{post.body.childMarkdownRemark.timeToRead} minutes</strong>.
-						</small>
-						<Spacing size="s" />
 						<Img alt={post.title} fluid={post.heroImage.fluid} />
+						<h1>{post.title}</h1>
 						<Row raw>
+							<Column l={2}>
+								<Spacing size="xs" />
+								<Person>
+									<Avatar>
+										<ImgWrapper>
+											<GatsbyImage
+												alt={post.author.image.title}
+												fluid={post.author.image.fluid}
+											/>
+										</ImgWrapper>
+									</Avatar>
+									<small>by {post.author.name}</small>
+									<br />
+									<small>{post.publishDate}</small>
+									<br />
+									<small>
+										Time to read:{" "}
+										<strong>
+											{post.body.childMarkdownRemark.timeToRead} minutes
+										</strong>
+										.
+									</small>
+								</Person>
+							</Column>
 							<Column m={8} raw>
 								<MDWrapper>
 									<ReactMarkdown
@@ -84,6 +102,14 @@ export const pageQuery = graphql`
 			}
 			author {
 				name
+				id
+				image {
+					description
+					title
+					fluid(maxWidth: 300, maxHeight: 300) {
+						...GatsbyContentfulFluid_withWebp
+					}
+				}
 			}
 		}
 	}

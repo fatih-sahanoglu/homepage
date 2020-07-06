@@ -1,48 +1,11 @@
 import React from "react";
 import {graphql, Link} from "gatsby";
 import get from "lodash/get";
-import styled from "styled-components";
 import Layout from "../components/layout";
-import Img from "gatsby-image";
-import {Box, Column, PADDING, Row} from "../components/grid";
+import {Column, Row} from "../components/grid";
 import {Spacing} from "../components/spacing";
-
-const Hover = styled.div`
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	padding: 0 calc(var(${PADDING}) * 1px);
-	display: flex;
-	align-items: center;
-	align-content: center;
-	transform: translate3d(0, 100%, 0);
-	transition: transform 0.25s ease-in-out;
-	background: white;
-	color: black;
-`;
-
-const GalleryImage = styled(Img)`
-	width: 100%;
-	transform: scale3d(1, 1, 1);
-	transition: transform 0.25s ease-in-out;
-`;
-
-const Cover = styled.div`
-	width: 100%;
-	position: relative;
-	display: flex;
-	overflow: hidden;
-	&:hover {
-		${Hover} {
-			transform: translate3d(0, 0, 0);
-		}
-		${GalleryImage} {
-			transform: scale3d(1.1, 1.1, 1);
-			transition-duration: 1s;
-		}
-	}
-`;
+import {Title} from "../components/title";
+import {Cover, GalleryImage} from "../components/cover";
 
 class GalleryIndex extends React.Component {
 	render() {
@@ -50,18 +13,20 @@ class GalleryIndex extends React.Component {
 		return (
 			<Layout>
 				<Row>
-					{posts.map(post => {
+					{posts.map((post, i) => {
 						return (
-							<Column key={post.node.slug} l={4} raw>
+							<Column key={post.node.slug} m={4} l={(i % 3) + ((i + 2) % 4) + 2}>
 								<Link to={`/gallery/${post.node.slug}`}>
+									<Spacing size={i % 2 ? "xl" : i % 3 ? "m" : "l"} />
 									<Cover>
 										<GalleryImage
 											alt={post.node.images[0].title}
 											fluid={post.node.images[0].fluid}
 										/>
+										<Title>{post.node.title}</Title>
 									</Cover>
+									<Spacing size={i % 2 ? "m" : i % 3 ? "l" : "xl"} />
 								</Link>
-								<Spacing size="s" />
 							</Column>
 						);
 					})}
@@ -88,6 +53,8 @@ export const pageQuery = graphql`
 					title
 					images {
 						id
+						title
+						description
 						fluid(maxWidth: 500, maxHeight: 500, resizingBehavior: THUMB) {
 							...GatsbyContentfulFluid_withWebp
 						}

@@ -6,6 +6,9 @@ import Img from "gatsby-image";
 import {COLCOUNT, Column, GUTTER, PADDING, Row} from "../components/grid";
 import styled from "styled-components";
 import {Spacing} from "../components/spacing";
+import {RelativeBox} from "../components/elements";
+import {Title} from "../components/title";
+import {Cover, GalleryImage} from "../components/cover";
 
 const ProductImg = styled(Img)`
 	width: 100%;
@@ -31,13 +34,17 @@ class ProductsIndex extends React.Component {
 		return (
 			<Layout>
 				<Row>
-					{posts.map(post => {
+					{posts.map((post, i) => {
 						const [file] = get(post, "node.gallery.images");
 						return (
-							<Column key={post.node.slug} l={4} raw>
-								<Link to={`/products/${post.node.slug}`}>
-									<h3>{post.node.title}</h3>
-									<ProductImg alt={file.title} fluid={file.fluid} />
+							<Column key={post.node.slug} m={4} l={(i % 3) + ((i + 2) % 4) + 2}>
+								<Link to={`/gallery/${post.node.slug}`}>
+									<Spacing size={i % 2 ? "xl" : i % 3 ? "m" : "l"} />
+									<Cover>
+										<GalleryImage alt={file.title} fluid={file.fluid} />
+										<Title>{post.node.title}</Title>
+									</Cover>
+									<Spacing size={i % 2 ? "m" : i % 3 ? "l" : "xl"} />
 								</Link>
 							</Column>
 						);
@@ -66,10 +73,11 @@ export const pageQuery = graphql`
 					gallery {
 						images {
 							id
+							title
+							description
 							fluid(maxWidth: 800, maxHeight: 600) {
 								...GatsbyContentfulFluid_withWebp
 							}
-							title
 						}
 					}
 				}

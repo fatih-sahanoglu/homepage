@@ -80,7 +80,6 @@ const Navigation: React.FC = () => {
 	const minSizeDiff = header.height - header.minHeight;
 	const offset = header.height - minMax(0, minSizeDiff, scrollY);
 	const scale = offset / header.height;
-	// const sticky = offset === header.minHeight;
 	return (
 		<Row>
 			<HeaderStage>

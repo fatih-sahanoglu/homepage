@@ -53,13 +53,15 @@ export const pageQuery = graphql`
 				title
 			}
 		}
-		allContentfulBlogPost(sort: {fields: [publishDate], order: DESC}) {
+		allContentfulBlogPost(sort: {fields: [publishDate], order: DESC}, limit: 3) {
 			edges {
 				node {
 					title
 					slug
 					publishDate(formatString: "MMMM Do, YYYY")
 					heroImage {
+						title
+						description
 						fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: THUMB) {
 							...GatsbyContentfulFluid_withWebp
 						}
@@ -76,36 +78,54 @@ export const pageQuery = graphql`
 			id
 			title
 			slots {
-				... on ContentfulHero {
-					id
-					cards {
-						id
-						headline {
-							id
-							childMarkdownRemark {
-								rawMarkdownBody
-							}
-						}
-						body {
-							id
-							childMarkdownRemark {
-								rawMarkdownBody
-							}
-						}
-						backgroundImage {
-							fluid(maxWidth: 1000, maxHeight: 600) {
-								...GatsbyContentfulFluid_withWebp
-							}
-						}
-						backgroundColor
-					}
-				}
 				... on ContentfulMarkdown {
 					id
 					text {
 						childMarkdownRemark {
 							rawMarkdownBody
 						}
+					}
+				}
+				... on ContentfulGallery {
+					id
+					images {
+						id
+						title
+						description
+						fluid(maxWidth: 1600, maxHeight: 600) {
+							...GatsbyContentfulFluid_withWebp
+						}
+					}
+				}
+				... on ContentfulHero {
+					id
+					cards {
+						id
+						backgroundColor
+						backgroundImage {
+							title
+							description
+							fluid(maxWidth: 1600, maxHeight: 600) {
+								...GatsbyContentfulFluid_withWebp
+							}
+						}
+						body {
+							childMarkdownRemark {
+								rawMarkdownBody
+							}
+						}
+						headline {
+							childMarkdownRemark {
+								rawMarkdownBody
+							}
+						}
+					}
+				}
+				... on ContentfulLocation {
+					id
+					location {
+						lat
+						lon
 					}
 				}
 			}
