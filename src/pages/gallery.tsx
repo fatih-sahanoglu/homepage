@@ -18,12 +18,12 @@ class GalleryIndex extends React.Component {
 							<Column key={post.node.slug} m={4} l={(i % 3) + ((i + 2) % 4) + 2}>
 								<Link to={`/gallery/${post.node.slug}`}>
 									<Spacing size={i % 2 ? "xl" : i % 3 ? "m" : "l"} />
+									<Title>{post.node.title}</Title>
 									<Cover>
 										<GalleryImage
 											alt={post.node.images[0].title}
 											fluid={post.node.images[0].fluid}
 										/>
-										<Title>{post.node.title}</Title>
 									</Cover>
 									<Spacing size={i % 2 ? "m" : i % 3 ? "l" : "xl"} />
 								</Link>

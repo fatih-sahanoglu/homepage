@@ -20,6 +20,11 @@ export default ({article}) => (
 		</Column>
 		<Column m={4} l={6} raw>
 			<small>{article.publishDate}</small>
+			<br />
+			<small>
+				Time to read: <strong>{article.body.childMarkdownRemark.timeToRead} minutes</strong>
+				.
+			</small>
 			<ReactMarkdown source={article.body.childMarkdownRemark.excerpt} />
 		</Column>
 	</Row>

@@ -40,9 +40,9 @@ class ProductsIndex extends React.Component {
 							<Column key={post.node.slug} m={4} l={(i % 3) + ((i + 2) % 4) + 2}>
 								<Link to={`/products/${post.node.slug}`}>
 									<Spacing size={i % 2 ? "xl" : i % 3 ? "m" : "l"} />
+									<Title>{post.node.title}</Title>
 									<Cover>
 										<GalleryImage alt={file.title} fluid={file.fluid} />
-										<Title>{post.node.title}</Title>
 									</Cover>
 									<Spacing size={i % 2 ? "m" : i % 3 ? "l" : "xl"} />
 								</Link>
