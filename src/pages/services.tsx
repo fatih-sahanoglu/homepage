@@ -19,7 +19,7 @@ class ServicesIndex extends React.Component {
 						const images = get(post, "node.gallery.images");
 						return (
 							<Column key={post.node.slug} m={4} l={(i % 3) + ((i + 2) % 4) + 2}>
-								<Link to={`/gallery/${post.node.slug}`}>
+								<Link to={`/services/${post.node.slug}`}>
 									<Spacing size={i % 2 ? "xl" : i % 3 ? "m" : "l"} />
 									<Cover>
 										<GalleryImage
