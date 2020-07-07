@@ -24,8 +24,11 @@ function GalleryTemplate(props) {
 				{post.images.map((image, i) => {
 					return (
 						<React.Fragment key={`${image.id}:${i}`}>
-							<Column l={i % 2} />
-							<Column l={(i % 3) + (i % 3 === 2 ? 5 : 4)} flex>
+							<Column m={i % 2} l={i % 2} />
+							<Column
+								m={(i % 3) + (i % 3 === 2 ? 2 : 1)}
+								l={(i % 3) + (i % 3 === 2 ? 5 : 4)}
+								flex>
 								<Box alignSelf="center" removePadding>
 									<Spacing size="m" />
 									<ParallaxBox index={i}>
@@ -36,8 +39,8 @@ function GalleryTemplate(props) {
 									<Spacing size="m" />
 								</Box>
 							</Column>
-							<Column l={1} />
-							<Column l={(i + 1) % 3} />
+							<Column m={1} l={1} />
+							<Column m={(i + 1) % 3} l={(i + 1) % 3} />
 						</React.Fragment>
 					);
 				})}

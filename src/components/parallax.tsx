@@ -36,7 +36,7 @@ export const Parallax: React.FC<ParallaxProps> = ({children, interpolate, bounda
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, [handleScroll]);
-	const style = React.useMemo(() => (viewport.mu ? interpolate(progress) : {}), [
+	const style = React.useMemo(() => (viewport.lu ? interpolate(progress) : {}), [
 		interpolate,
 		progress,
 		viewport

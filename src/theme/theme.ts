@@ -15,7 +15,7 @@ export const theme: DefaultTheme = {
 	components: {
 		header: {
 			height: 300,
-			minHeight: 75
+			minHeight: 40
 		},
 		logo: {
 			size: 200

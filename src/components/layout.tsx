@@ -34,9 +34,9 @@ const GlobalStyle = createGlobalStyle`
 	body {
 		margin: 0;
 		min-height: 100vh;
-		overflow-x: hidden;
 		max-width: 100vw;
-		background: white;
+		min-width: 320px;
+		overflow-x: hidden;
 	}
 	h1, h2, h3 {
 		font-family: Magneta, sans-serif;
@@ -98,7 +98,6 @@ const Layout: React.FC = ({children}) => {
 						<Row>
 							<Column>
 								<Navigation />
-								<Spacing size="s" />
 							</Column>
 						</Row>
 						<MainRow>

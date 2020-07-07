@@ -1,6 +1,6 @@
 import React from "react";
 import {Link as GatsbyLink} from "gatsby";
-import {PADDING, Row, Stage} from "./grid";
+import {PADDING, Row, Stage, useGrid} from "./grid";
 import styled, {css} from "styled-components";
 import {Spacing} from "./spacing";
 import {Logo} from "./logo";
@@ -27,16 +27,37 @@ const Stretch = styled.div<{justify?: string}>`
 	justify-content: ${({justify = "flex-start"}) => justify};
 `;
 
-const Link = styled(GatsbyLink)`
+const HomeLink = styled(GatsbyLink)`
 	color: currentColor;
 	text-decoration: none;
-	padding: 1em calc(var(${PADDING}) * 1px);
+	padding: 0 calc(var(${PADDING}) * 1px);
 	display: flex;
 	align-content: center;
 	justify-content: center;
+	order: -1;
+	width: 100%;
+	${({theme}) => css`
+		@media ${theme.grid.mq.m} {
+			order: initial;
+			width: initial;
+		}
+	`};
+`;
+
+const Link = styled(HomeLink).attrs({
+	activeClassName: "active",
+	partiallyActive: true
+})`
+	padding: 0.25em calc(var(${PADDING}) * 1px);
 	&.active {
 		box-shadow: 0 4px 0 0 currentColor;
 	}
+	font-size: 0.8em;
+	${({theme}) => css`
+		@media ${theme.grid.mq.m} {
+			font-size: 1em;
+		}
+	`};
 `;
 
 const useScrollY = () => {
@@ -61,62 +82,43 @@ const Header = styled.div`
 	z-index: 10;
 `;
 
-const HeaderStage = styled(Stage)`
-	${({
-		theme: {
-			components: {header}
-		}
-	}) => css`
-		margin-bottom: ${header.height}px;
-	`};
-`;
-
 const Navigation: React.FC = () => {
 	const {
 		components: {header, logo}
 	} = useTheme();
+	const {viewport} = useGrid();
 	const scrollY = useScrollY();
 	const minSizeDiff = header.height - header.minHeight;
-	const offset = header.height - minMax(0, minSizeDiff, scrollY);
+	const offset = viewport.s ? 65 : header.height - minMax(0, minSizeDiff, scrollY);
 	const scale = offset / header.height;
 	return (
 		<Row>
-			<HeaderStage>
+			<Stage style={{marginBottom: viewport.mu ? header.height : 0}}>
 				<Header>
 					<Nav
 						role="navigation"
 						style={{
 							height: offset
 						}}>
-						<Spacing size="xs" />
 						<Stretch justify="flex-end">
-							<Link to="/blog/" activeClassName="active" partiallyActive>
-								Blog
-							</Link>
-							<Link to="/gallery/" activeClassName="active" partiallyActive>
-								Gallery
-							</Link>
+							<Link to="/blog/">Blog</Link>
+							<Link to="/gallery/">Gallery</Link>
 						</Stretch>
-						<Link to="/">
-							<Logo
-								style={{
-									fontSize: logo.size,
-									transform: `scale3d(${scale}, ${scale}, 1)`
-								}}
-							/>
-						</Link>
+						<HomeLink
+							to="/"
+							style={{
+								fontSize: viewport.mu ? logo.size : "2em",
+								transform: viewport.mu && `scale3d(${scale}, ${scale}, 1)`
+							}}>
+							<Logo />
+						</HomeLink>
 						<Stretch>
-							<Link to="/services" activeClassName="active" partiallyActive>
-								Service
-							</Link>
-							<Link to="/products/" activeClassName="active" partiallyActive>
-								Products
-							</Link>
+							<Link to="/services">Service</Link>
+							<Link to="/products/">Products</Link>
 						</Stretch>
-						<Spacing size="xs" />
 					</Nav>
 				</Header>
-			</HeaderStage>
+			</Stage>
 		</Row>
 	);
 };

@@ -21,8 +21,11 @@ function ProductsIndex(props) {
 					const id = get(post, "node.id");
 					return (
 						<React.Fragment key={id}>
-							<Column l={i % 2} />
-							<Column l={(i % 3) + (i % 3 === 2 ? 5 : 4)} flex>
+							<Column m={i % 2} l={i % 2} />
+							<Column
+								m={(i % 3) + (i % 3 === 2 ? 2 : 1)}
+								l={(i % 3) + (i % 3 === 2 ? 5 : 4)}
+								flex>
 								<Box alignSelf="center" removePadding>
 									<Spacing size="m" />
 									<ParallaxBox index={i}>
@@ -39,8 +42,8 @@ function ProductsIndex(props) {
 									<Spacing size="m" />
 								</Box>
 							</Column>
-							<Column l={1} />
-							<Column l={(i + 1) % 3} />
+							<Column m={1} l={1} />
+							<Column m={(i + 1) % 3} l={(i + 1) % 3} />
 						</React.Fragment>
 					);
 				})}
@@ -69,7 +72,7 @@ export const pageQuery = graphql`
 							id
 							title
 							description
-							fluid(maxWidth: 800, maxHeight: 600) {
+							fluid(maxWidth: 800) {
 								...GatsbyContentfulFluid_withWebp
 							}
 						}
