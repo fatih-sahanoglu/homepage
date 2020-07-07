@@ -12,7 +12,7 @@ const ContactPage = props => {
 	const slots = get(props, "data.contentfulPage.slots");
 	return (
 		<Layout>
-			<Helmet title={siteTitle} />
+			<Helmet title={`${siteTitle} | Contact`} />
 			<Row>
 				<Column raw>
 					<h1>Contact</h1>

@@ -7,41 +7,39 @@ import ArticlePreview from "../components/article-preview";
 import {Column, Row} from "../components/grid";
 import {Contentful} from "../components/elements";
 
-class RootIndex extends React.Component {
-	render() {
-		const siteTitle = get(this, "props.data.site.siteMetadata.title");
-		const posts = get(this, "props.data.allContentfulBlogPost.edges");
-		const slots = get(this, "props.data.contentfulPage.slots");
-		return (
-			<Layout>
-				<Helmet title={siteTitle} />
-				<Row>
-					{slots.map(({__typename, id, ...props}) => {
+function RootIndex(props) {
+	const siteTitle = get(props, "data.site.siteMetadata.title");
+	const posts = get(props, "data.allContentfulBlogPost.edges");
+	const slots = get(props, "data.contentfulPage.slots");
+	return (
+		<Layout>
+			<Helmet title={siteTitle} />
+			<Row>
+				{slots.map(({__typename, id, ...props}) => {
+					return (
+						<Column key={id}>
+							<Contentful contentType={__typename} {...props} />
+						</Column>
+					);
+				})}
+			</Row>
+
+			<Row>
+				<Column raw>
+					<h2>Recent articles</h2>
+				</Column>
+				{posts
+					.filter((x, i) => i < 3)
+					.map(({node}) => {
 						return (
-							<Column key={id}>
-								<Contentful contentType={__typename} {...props} />
+							<Column m={4} key={node.slug} raw>
+								<ArticlePreview article={node} />
 							</Column>
 						);
 					})}
-				</Row>
-
-				<Row>
-					<Column raw>
-						<h2>Recent articles</h2>
-					</Column>
-					{posts
-						.filter((x, i) => i < 3)
-						.map(({node}) => {
-							return (
-								<Column m={4} key={node.slug} raw>
-									<ArticlePreview article={node} />
-								</Column>
-							);
-						})}
-				</Row>
-			</Layout>
-		);
-	}
+			</Row>
+		</Layout>
+	);
 }
 
 export default RootIndex;

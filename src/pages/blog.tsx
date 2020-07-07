@@ -6,62 +6,41 @@ import Layout from "../components/layout";
 import ArticlePreview from "../components/article-preview";
 import {Column, Row} from "../components/grid";
 import GatsbyImage from "gatsby-image";
-import styled from "styled-components";
 import {Person} from "../components/person";
+import {Avatar, ImgWrapper} from "../components/avatar";
 
-export const ImgWrapper = styled.div`
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	border-radius: 50%;
-	overflow: hidden;
-`;
+function BlogIndex(props) {
+	const siteTitle = get(props, "data.site.siteMetadata.title");
+	const posts = get(props, "data.allContentfulBlogPost.edges");
+	const person = get(props, "data.contentfulPerson");
 
-export const Avatar = styled.div`
-	position: relative;
-	padding-bottom: 100%;
-	width: 100%;
-`;
-
-class BlogIndex extends React.Component {
-	render() {
-		const siteTitle = get(this, "props.data.site.siteMetadata.title");
-		const posts = get(this, "props.data.allContentfulBlogPost.edges");
-		const person = get(this, "props.data.contentfulPerson");
-
-		return (
-			<>
-				<Helmet title={siteTitle} />
-				<Layout>
+	return (
+		<Layout>
+			<Helmet title={`${siteTitle} | Blog`} />
+			<Row>
+				<Column s={1} m={2}>
+					<Person>
+						<Avatar>
+							<ImgWrapper>
+								<GatsbyImage fluid={person.image.fluid} />
+							</ImgWrapper>
+						</Avatar>
+					</Person>
+				</Column>
+				<Column s={3} m={4} l={8}>
 					<Row>
-						<Column l={2}>
-							<Person>
-								<Avatar>
-									<ImgWrapper>
-										<GatsbyImage fluid={person.image.fluid} />
-									</ImgWrapper>
-								</Avatar>
-								<h3>{person.name}</h3>
-							</Person>
-						</Column>
-						<Column l={10}>
-							<Row>
-								{posts.map(({node}) => {
-									return (
-										<Column key={node.slug} raw>
-											<ArticlePreview article={node} />
-										</Column>
-									);
-								})}
-							</Row>
-						</Column>
+						{posts.map(({node}) => {
+							return (
+								<Column key={node.slug} raw>
+									<ArticlePreview article={node} />
+								</Column>
+							);
+						})}
 					</Row>
-				</Layout>
-			</>
-		);
-	}
+				</Column>
+			</Row>
+		</Layout>
+	);
 }
 
 export default BlogIndex;
@@ -95,7 +74,7 @@ export const pageQuery = graphql`
 				}
 			}
 		}
-		contentfulPerson(name: {eq: "Fatih Sahanoglu"}) {
+		contentfulPerson(id: {eq: "e03ecdfb-d1ce-57a0-9c83-c012a764e7dc"}) {
 			id
 			name
 			image {

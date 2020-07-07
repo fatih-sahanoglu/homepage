@@ -8,6 +8,10 @@ import {Stretch} from "./spacing/stretch";
 import {Spacing} from "./spacing";
 import GatsbyImage from "gatsby-image";
 import {CustomMap} from "./map";
+import {ParallaxBox} from "./parallax";
+import {Link} from "gatsby";
+import {Title} from "./title";
+import {Cover, GalleryImage} from "./cover";
 
 export const Img = styled(GatsbyImage)`
 	position: absolute;
@@ -151,9 +155,22 @@ export const components = {
 		return (
 			<Row>
 				{images.map((image, i) => (
-					<Column key={image.id} m={4} l={(i % 3) + 5}>
-						<Img fluid={image.fluid} />
-					</Column>
+					<React.Fragment key={`${image.id}:${i}`}>
+						<Column l={i % 2} />
+						<Column l={(i % 3) + (i % 3 === 2 ? 5 : 4)} flex>
+							<Box alignSelf="center" removePadding>
+								<Spacing size="m" />
+								<ParallaxBox index={i}>
+									<Cover>
+										<GalleryImage alt={image.title} fluid={image.fluid} />
+									</Cover>
+								</ParallaxBox>
+								<Spacing size="m" />
+							</Box>
+						</Column>
+						<Column l={1} />
+						<Column l={(i + 1) % 3} />
+					</React.Fragment>
 				))}
 			</Row>
 		);

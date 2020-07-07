@@ -2,38 +2,51 @@ import React from "react";
 import {graphql, Link} from "gatsby";
 import get from "lodash/get";
 import Layout from "../components/layout";
-import {Column, Row} from "../components/grid";
+import {Box, Column, Row} from "../components/grid";
 import {Spacing} from "../components/spacing";
 import {Title} from "../components/title";
 import {Cover, GalleryImage} from "../components/cover";
+import {ParallaxBox} from "../components/parallax";
+import Helmet from "react-helmet";
 
-class GalleryIndex extends React.Component {
-	render() {
-		const posts = get(this, "props.data.allContentfulGallery.edges");
-		return (
-			<Layout>
-				<Row>
-					{posts.map((post, i) => {
-						return (
-							<Column key={post.node.slug} m={4} l={(i % 3) + ((i + 2) % 4) + 2}>
-								<Link to={`/gallery/${post.node.slug}`}>
-									<Spacing size={i % 2 ? "xl" : i % 3 ? "m" : "l"} />
-									<Title>{post.node.title}</Title>
-									<Cover>
-										<GalleryImage
-											alt={post.node.images[0].title}
-											fluid={post.node.images[0].fluid}
-										/>
-									</Cover>
-									<Spacing size={i % 2 ? "m" : i % 3 ? "l" : "xl"} />
-								</Link>
+function GalleryIndex(props) {
+	const siteTitle = get(props, "data.site.siteMetadata.title");
+	const posts = get(props, "data.allContentfulGallery.edges");
+	return (
+		<Layout>
+			<Helmet title={`${siteTitle} | Gallery`} />
+			<Row>
+				{posts.map((post, i) => {
+					const [image] = get(post, "node.images");
+					const id = get(post, "node.id");
+					return (
+						<React.Fragment key={id}>
+							<Column l={i % 2} />
+							<Column l={(i % 3) + (i % 3 === 2 ? 5 : 4)} flex>
+								<Box alignSelf="center" removePadding>
+									<Spacing size="m" />
+									<ParallaxBox index={i}>
+										<Link to={`/gallery/${post.node.slug}`}>
+											<Title>{post.node.title}</Title>
+											<Cover>
+												<GalleryImage
+													alt={image.title}
+													fluid={image.fluid}
+												/>
+											</Cover>
+										</Link>
+									</ParallaxBox>
+									<Spacing size="m" />
+								</Box>
 							</Column>
-						);
-					})}
-				</Row>
-			</Layout>
-		);
-	}
+							<Column l={1} />
+							<Column l={(i + 1) % 3} />
+						</React.Fragment>
+					);
+				})}
+			</Row>
+		</Layout>
+	);
 }
 
 export default GalleryIndex;

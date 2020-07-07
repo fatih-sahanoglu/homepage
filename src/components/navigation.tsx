@@ -30,13 +30,12 @@ const Stretch = styled.div<{justify?: string}>`
 const Link = styled(GatsbyLink)`
 	color: currentColor;
 	text-decoration: none;
-	padding: 0 calc(var(${PADDING}) * 1px);
+	padding: 1em calc(var(${PADDING}) * 1px);
 	display: flex;
 	align-content: center;
 	justify-content: center;
-
-	&:hover {
-		text-decoration: underline;
+	&.active {
+		box-shadow: 0 4px 0 0 currentColor;
 	}
 `;
 
@@ -91,8 +90,12 @@ const Navigation: React.FC = () => {
 						}}>
 						<Spacing size="xs" />
 						<Stretch justify="flex-end">
-							<Link to="/blog/">Blog</Link>
-							<Link to="/gallery/">Gallery</Link>
+							<Link to="/blog/" activeClassName="active" partiallyActive>
+								Blog
+							</Link>
+							<Link to="/gallery/" activeClassName="active" partiallyActive>
+								Gallery
+							</Link>
 						</Stretch>
 						<Link to="/">
 							<Logo
@@ -103,8 +106,12 @@ const Navigation: React.FC = () => {
 							/>
 						</Link>
 						<Stretch>
-							<Link to="/services">Service</Link>
-							<Link to="/products/">Products</Link>
+							<Link to="/services" activeClassName="active" partiallyActive>
+								Service
+							</Link>
+							<Link to="/products/" activeClassName="active" partiallyActive>
+								Products
+							</Link>
 						</Stretch>
 						<Spacing size="xs" />
 					</Nav>

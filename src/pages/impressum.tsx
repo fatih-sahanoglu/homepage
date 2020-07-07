@@ -11,7 +11,7 @@ const Impressum = props => {
 	const slots = get(props, "data.contentfulPage.slots");
 	return (
 		<Layout>
-			<Helmet title={siteTitle} />
+			<Helmet title={`${siteTitle} | Impressum`} />
 			<Row>
 				<Column raw>
 					<h1>Impressum</h1>

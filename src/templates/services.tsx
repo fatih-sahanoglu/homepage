@@ -16,6 +16,8 @@ import {
 } from "../components/carousel";
 import {Stretch} from "../components/spacing/stretch";
 import styled from "styled-components";
+import Helmet from "react-helmet";
+
 const price = (n: number): string => `${n.toFixed(2)} €`;
 const Table = styled.table`
 	width: 100%;
@@ -56,69 +58,68 @@ const FlexStretch = styled(Stretch)`
 	display: flex;
 `;
 
-class ServicesTemplate extends React.Component {
-	render() {
-		const post = get(this.props, "data.contentfulServices");
-		const images = get(post, "gallery.images");
+function ServicesTemplate(props) {
+	const siteTitle = get(props, "data.site.siteMetadata.title");
+	const post = get(props, "data.contentfulServices");
+	const images = get(post, "gallery.images");
 
-		return (
-			<Layout>
-				<Row>
-					<Column m={4} l={7}>
-						{images && (
-							<Box removeGutter removePadding>
-								<Carousel>
-									<Slides clip={ClipSlides.right} reverse>
-										{images.map(image => (
-											<CarouselPanel raw>
-												<Img alt={image.title} fluid={image.fluid} />
-											</CarouselPanel>
-										))}
-									</Slides>
-									<Nav>
-										<CarouselNav>
-											<FlexStretch>
-												<CenterBox flex alignSelf="stretch">
-													<CarouselPageNumbers />
-												</CenterBox>
-											</FlexStretch>
-										</CarouselNav>
-									</Nav>
-								</Carousel>
-							</Box>
-						)}
-					</Column>
-					<Column m={4} l={5} raw>
-						<Table>
-							<Tbody>
-								{post.service.map(service => {
-									return (
-										<Tr key={service.id}>
-											<Td>
-												<p>{service.name}</p>
-												<small>
-													{service.description && (
-														<ReactMarkdown
-															source={
-																service.description
-																	.childMarkdownRemark
-																	.rawMarkdownBody
-															}
-														/>
-													)}
-												</small>
-											</Td>
-											<Td textEnd>{price(service.price)}</Td>
-										</Tr>
-									);
-								})}
-							</Tbody>
-						</Table>
-					</Column>
-				</Row>
-			</Layout>
-		);
-	}
+	return (
+		<Layout>
+			<Helmet title={`${post.title} | ${siteTitle}`} />
+			<Row>
+				<Column l={8}>
+					{images && (
+						<Box removeGutter removePadding>
+							<Carousel>
+								<Slides clip={ClipSlides.right} reverse>
+									{images.map(image => (
+										<CarouselPanel raw>
+											<Img alt={image.title} fluid={image.fluid} />
+										</CarouselPanel>
+									))}
+								</Slides>
+								<Nav>
+									<CarouselNav>
+										<FlexStretch>
+											<CenterBox flex alignSelf="stretch">
+												<CarouselPageNumbers />
+											</CenterBox>
+										</FlexStretch>
+									</CarouselNav>
+								</Nav>
+							</Carousel>
+						</Box>
+					)}
+				</Column>
+				<Column l={4} raw>
+					<Table>
+						<Tbody>
+							{post.service.map(service => {
+								return (
+									<Tr key={service.id}>
+										<Td>
+											<p>{service.name}</p>
+											<small>
+												{service.description && (
+													<ReactMarkdown
+														source={
+															service.description.childMarkdownRemark
+																.rawMarkdownBody
+														}
+													/>
+												)}
+											</small>
+										</Td>
+										<Td textEnd>{price(service.price)}</Td>
+									</Tr>
+								);
+							})}
+						</Tbody>
+					</Table>
+				</Column>
+			</Row>
+		</Layout>
+	);
 }
 
 export default ServicesTemplate;

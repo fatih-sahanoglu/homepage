@@ -18,7 +18,7 @@ export default ({article}) => (
 			</Link>
 			<Spacing size="s" />
 		</Column>
-		<Column m={4} l={6} raw>
+		<Column m={4} l={4} raw>
 			<small>{article.publishDate}</small>
 			<br />
 			<small>

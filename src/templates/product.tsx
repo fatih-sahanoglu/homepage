@@ -2,8 +2,7 @@ import React from "react";
 import {graphql} from "gatsby";
 import get from "lodash/get";
 import Layout from "../components/layout";
-import Helmet from "react-helmet";
-import {Box, Column, PADDING, Row} from "../components/grid";
+import {Box, Column, Row} from "../components/grid";
 import {Img} from "../components/image";
 import ReactMarkdown from "react-markdown";
 import {
@@ -19,6 +18,8 @@ import FluidType from "../components/fluid-type";
 import {Spacing} from "../components/spacing";
 import styled from "styled-components";
 import {Stretch} from "../components/spacing/stretch";
+import Helmet from "react-helmet";
+import {Tab, TabBar, TabContent, useTabs} from "../components/tabs";
 
 const CenterBox = styled(Box)`
 	align-items: center;
@@ -32,43 +33,8 @@ const FlexStretch = styled(Stretch)`
 	display: flex;
 `;
 
-const useTabs = (length: number, initiallySelected = 0) => {
-	const [selected, setSelected] = React.useState(initiallySelected);
-	const goTo = React.useCallback(
-		(index: number) => {
-			setSelected(index);
-		},
-		[setSelected]
-	);
-	return [selected, goTo];
-};
-
-const Tab = styled.button<{selected?: boolean}>`
-	appearance: none;
-	border-radius: 0;
-	font-size: 1em;
-	border-style: solid;
-	border-width: 0 0 4px 0;
-	border-color: ${({selected}) => (selected ? "currentColor" : "transparent")};
-	background: none;
-	color: inherit;
-	cursor: pointer;
-	padding: 1em calc(var(${PADDING}) * 1px);
-	&:active {
-		background: rgba(0, 0, 0, 0.3);
-	}
-`;
-
-const TabBar = styled.div`
-	background: #fff;
-	color: #000;
-`;
-
-const TabContent = styled.div<{selected?: boolean}>`
-	display: ${({selected}) => (selected ? "block" : "none")};
-`;
-
 const ProductTemplate: React.FC = props => {
+	const siteTitle = get(props, "data.site.siteMetadata.title");
 	const post = get(props, "data.contentfulProduct");
 	const images = get(post, "gallery.images");
 	const tabs = {
@@ -81,6 +47,7 @@ const ProductTemplate: React.FC = props => {
 
 	return (
 		<Layout>
+			<Helmet title={`${post.title} | ${siteTitle}`} />
 			<Row>
 				<Column raw>
 					<FluidType minFontSize={30} maxFontSize={70} as="h1">
@@ -88,7 +55,7 @@ const ProductTemplate: React.FC = props => {
 					</FluidType>
 					<Spacing size="l" />
 				</Column>
-				<Column m={4} l={6}>
+				<Column l={8}>
 					{images && (
 						<Box removeGutter removePadding>
 							<Carousel>
@@ -112,7 +79,7 @@ const ProductTemplate: React.FC = props => {
 						</Box>
 					)}
 				</Column>
-				<Column m={4} l={6} raw>
+				<Column l={4} raw>
 					<TabBar>
 						{tabEntries.map(([tab], index) => {
 							return (

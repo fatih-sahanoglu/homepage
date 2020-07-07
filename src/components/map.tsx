@@ -16,7 +16,7 @@ export interface ControlsProps {
 	onZoomOut(): void;
 }
 
-export const MapArea = styled(Column).attrs({raw: true})`
+export const MapArea = styled.div`
 	display: flex;
 	justify-content: center;
 	width: 100%;
@@ -76,7 +76,6 @@ export const CustomMap: React.FC<{lat: number; lon: number}> = ({lat, lon}) => {
 	}, [setFullWidth]);
 	return (
 		<MapArea>
-			<Spacing size="s" />
 			<MapWrapper ref={mapWrapper}>
 				<Controls onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} />
 				<Map
@@ -88,7 +87,6 @@ export const CustomMap: React.FC<{lat: number; lon: number}> = ({lat, lon}) => {
 					<Marker anchor={[lat, lon]} payload={1} />
 				</Map>
 			</MapWrapper>
-			<Spacing size="s" />
 		</MapArea>
 	);
 };

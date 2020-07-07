@@ -44,9 +44,6 @@ const GlobalStyle = createGlobalStyle`
 	a {
 		color: currentColor;
 		text-decoration: none;
-		&:hover {
-			text-decoration: underline;
-		}
 	}
 	img {
 		max-width: 100%;
