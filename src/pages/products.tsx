@@ -33,9 +33,9 @@ function ProductsIndex(props) {
 										<Link to={`/products/${post.node.slug}`}>
 											<FluidType
 												as="h3"
-												style={{textAlign: "center"}}
-												minFontSize={30}
-												maxFontSize={70}>
+												minFontSize={20}
+												maxFontSize={40}
+												center>
 												{post.node.title}
 											</FluidType>
 											<Spacing size="m" />

@@ -68,6 +68,7 @@ export const LazyPanel: React.FC<CarouselPanelProps & Indexed> = ({
 
 export const SlidesWrapper = styled.div<SlidesWrapperProps>`
 	display: flex;
+	touch-action: cross-slide-x;
 	${({reverse}) => css`
 		flex-direction: ${reverse ? "row-reverse" : "row"};
 	`};

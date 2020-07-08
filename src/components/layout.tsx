@@ -1,5 +1,5 @@
 import React from "react";
-import styled, {createGlobalStyle, ThemeProvider} from "styled-components";
+import styled, {createGlobalStyle, css, ThemeProvider} from "styled-components";
 import Navigation from "./navigation";
 import {theme} from "../theme/theme";
 import {GridOverlay} from "./grid/GridOverlay";
@@ -40,6 +40,9 @@ const GlobalStyle = createGlobalStyle`
 	}
 	h1, h2, h3 {
 		font-family: Magneta, sans-serif;
+	}
+	h1 {
+	text-align: center;
 	}
 	a {
 		color: currentColor;
@@ -88,6 +91,15 @@ const OverflowSafe = styled.div`
 	width: 100vw;
 	min-height: 100vh;
 	overflow: hidden;
+	${({
+		theme: {
+			grid: {mq}
+		}
+	}) => css`
+		@media ${mq.l} {
+			overflow: visible;
+		}
+	`};
 `;
 
 const Layout: React.FC = ({children}) => {

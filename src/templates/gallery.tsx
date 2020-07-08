@@ -5,7 +5,6 @@ import Layout from "../components/layout";
 import Helmet from "react-helmet";
 import {Box, Column, Row} from "../components/grid";
 import {Spacing} from "../components/spacing";
-import {Img} from "../components/image";
 import {ParallaxBox} from "../components/parallax";
 import {Cover, GalleryImage} from "../components/cover";
 import FluidType from "../components/fluid-type";
@@ -19,11 +18,7 @@ function GalleryTemplate(props) {
 			<Row>
 				<Column raw>
 					<Spacing size="l" />
-					<FluidType
-						as="h1"
-						style={{textAlign: "center"}}
-						minFontSize={40}
-						maxFontSize={100}>
+					<FluidType as="h1" minFontSize={40} maxFontSize={100} center>
 						{post.title}
 					</FluidType>
 					<Spacing size="l" />

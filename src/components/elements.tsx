@@ -146,7 +146,8 @@ export const components = {
 	ContentfulMarkdown: ({text}) => {
 		return (
 			<Row>
-				<Column m={6} l={10} raw>
+				<Column m={1} l={2} />
+				<Column m={6} l={8}>
 					<ReactMarkdown source={text.childMarkdownRemark.rawMarkdownBody} />
 				</Column>
 			</Row>

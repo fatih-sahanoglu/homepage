@@ -25,7 +25,7 @@ function RootIndex(props) {
 			</Row>
 
 			<Row>
-				<Column raw>
+				<Column>
 					<h2>Recent articles</h2>
 				</Column>
 				{posts

@@ -3,6 +3,7 @@ import styled from "styled-components";
 const FluidType = styled.div<{
 	minFontSize: number;
 	maxFontSize: number;
+	center?: boolean;
 }>`
 	--min-font-size: ${props => props.minFontSize};
 	--max-font-size: ${props => props.maxFontSize};
@@ -11,6 +12,7 @@ const FluidType = styled.div<{
 	margin: 0;
 	line-height: 1;
 	font-family: magneta, serif;
+	text-align: ${props => (props.center ? "center" : "left")};
 	font-size: calc(
 		var(--min-font-size) * 1px + (var(--max-font-size) - var(--min-font-size)) *
 			((100vw - var(--min-width) * 1px) / (var(--max-width) - var(--min-width)))

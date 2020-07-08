@@ -48,32 +48,35 @@ export default class ContactForm extends React.Component<Props, State> {
 	render() {
 		const {status} = this.state;
 		return (
-			<Column>
-				<form
-					onSubmit={this.submitForm}
-					action="https://formspree.io/xrgyykye"
-					method="POST">
-					<Row>
-						<Column m={4} raw>
-							<label>
-								<Label>Email:</Label>
-								<Input type="email" name="email" />
-							</label>
-						</Column>
-						<Column />
-						<Column m={4} raw>
-							<label>
-								<Label>Message:</Label>
-								<Textarea name="message" />
-							</label>
-						</Column>
-						<Column raw>
-							{status === "SUCCESS" ? <p>Thanks!</p> : <Button>Submit</Button>}
-							{status === "ERROR" && <p>Ooops! There was an error.</p>}
-						</Column>
-					</Row>
-				</form>
-			</Column>
+			<>
+				<Column m={1} l={2} />
+				<Column m={6} l={8}>
+					<form
+						onSubmit={this.submitForm}
+						action="https://formspree.io/xrgyykye"
+						method="POST">
+						<Row>
+							<Column m={4}>
+								<label>
+									<Label>Email:</Label>
+									<Input type="email" name="email" />
+								</label>
+							</Column>
+							<Column />
+							<Column m={4}>
+								<label>
+									<Label>Message:</Label>
+									<Textarea name="message" />
+								</label>
+							</Column>
+							<Column>
+								{status === "SUCCESS" ? <p>Thanks!</p> : <Button>Submit</Button>}
+								{status === "ERROR" && <p>Ooops! There was an error.</p>}
+							</Column>
+						</Row>
+					</form>
+				</Column>
+			</>
 		);
 	}
 

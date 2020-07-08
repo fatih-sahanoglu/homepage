@@ -7,18 +7,18 @@ import ReactMarkdown from "react-markdown";
 
 export default ({article}) => (
 	<Row raw>
-		<Column raw>
+		<Column>
 			<h3>
 				<Link to={`/blog/${article.slug}`}>{article.title}</Link>
 			</h3>
 		</Column>
-		<Column m={4} raw>
+		<Column m={4}>
 			<Link to={`/blog/${article.slug}`}>
 				<Img alt="" fluid={article.heroImage.fluid} />
 			</Link>
 			<Spacing size="s" />
 		</Column>
-		<Column m={4} l={4} raw>
+		<Column m={4}>
 			<small>{article.publishDate}</small>
 			<br />
 			<small>

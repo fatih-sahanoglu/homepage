@@ -17,6 +17,8 @@ import {
 import {Stretch} from "../components/spacing/stretch";
 import styled from "styled-components";
 import Helmet from "react-helmet";
+import {Spacing} from "../components/spacing";
+import FluidType from "../components/fluid-type";
 
 const price = (n: number): string => `${n.toFixed(2)} €`;
 const Table = styled.table`
@@ -67,6 +69,13 @@ function ServicesTemplate(props) {
 		<Layout>
 			<Helmet title={`${post.title} | ${siteTitle}`} />
 			<Row>
+				<Column raw>
+					<Spacing size="l" />
+					<FluidType as="h1" minFontSize={40} maxFontSize={100} center>
+						{post.title}
+					</FluidType>
+					<Spacing size="l" />
+				</Column>
 				<Column l={8}>
 					{images && (
 						<Box removeGutter removePadding>

@@ -51,11 +51,7 @@ const ProductTemplate: React.FC = props => {
 			<Row>
 				<Column raw>
 					<Spacing size="l" />
-					<FluidType
-						as="h1"
-						style={{textAlign: "center"}}
-						minFontSize={40}
-						maxFontSize={100}>
+					<FluidType as="h1" minFontSize={40} maxFontSize={100} center>
 						{post.title}
 					</FluidType>
 					<Spacing size="l" />
