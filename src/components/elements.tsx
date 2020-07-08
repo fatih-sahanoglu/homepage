@@ -79,14 +79,6 @@ export const colors = {
 	purple: "hsl(280, 30%, 20%)"
 };
 
-const Load: React.FC = ({children}) => {
-	const [content, setContent] = React.useState<React.ReactNode>(null);
-	React.useEffect(() => {
-		setContent(children);
-	}, []);
-	return <>{content}</>;
-};
-
 export const components = {
 	ContentfulHero: ({cards}) => {
 		return (
@@ -189,11 +181,7 @@ export const components = {
 		return <CustomMap lat={location.lat} lon={location.lon} />;
 	},
 	ContentfulVideo: ({vimeo}) => {
-		return (
-			<Load>
-				<Vimeo video={vimeo} responsive />
-			</Load>
-		);
+		return null;
 	},
 	error: () => <div>Error</div>
 };
