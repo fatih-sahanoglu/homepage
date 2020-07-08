@@ -84,6 +84,12 @@ const MainRow = styled(Row)`
 	flex: 1;
 `;
 
+const OverflowSafe = styled.div`
+	width: 100vw;
+	min-height: 100vh;
+	overflow: hidden;
+`;
+
 const Layout: React.FC = ({children}) => {
 	return (
 		<ThemeProvider theme={theme}>
@@ -94,17 +100,19 @@ const Layout: React.FC = ({children}) => {
 			</Helmet>
 			<GridProvider grid={GRID}>
 				<WithDebuggers>
-					<MainGrid>
-						<Row>
-							<Column>
-								<Navigation />
-							</Column>
-						</Row>
-						<MainRow>
-							<Column>{children}</Column>
-						</MainRow>
-						<Footer />
-					</MainGrid>
+					<OverflowSafe>
+						<MainGrid>
+							<Row>
+								<Column>
+									<Navigation />
+								</Column>
+							</Row>
+							<MainRow>
+								<Column>{children}</Column>
+							</MainRow>
+							<Footer />
+						</MainGrid>
+					</OverflowSafe>
 				</WithDebuggers>
 			</GridProvider>
 		</ThemeProvider>
