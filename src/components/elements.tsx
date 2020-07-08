@@ -79,11 +79,14 @@ export const colors = {
 	purple: "hsl(280, 30%, 20%)"
 };
 
-const Video = styled(Vimeo)`
-	width: 100%;
-	display: flex;
-	justify-content: center;
-`;
+const Load: React.FC = ({children}) => {
+	const [content, setContent] = React.useState<React.ReactNode>(null);
+	React.useEffect(() => {
+		setContent(children);
+	}, []);
+	return <>{content}</>;
+};
+
 export const components = {
 	ContentfulHero: ({cards}) => {
 		return (
@@ -186,7 +189,11 @@ export const components = {
 		return <CustomMap lat={location.lat} lon={location.lon} />;
 	},
 	ContentfulVideo: ({vimeo}) => {
-		return <Vimeo video={vimeo} responsive />;
+		return (
+			<Load>
+				<Vimeo video={vimeo} responsive />
+			</Load>
+		);
 	},
 	error: () => <div>Error</div>
 };

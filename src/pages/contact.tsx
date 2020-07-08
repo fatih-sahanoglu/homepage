@@ -24,7 +24,6 @@ const ContactPage = props => {
 					<div>
 						<a href={`tel:${toPhone(location.telephone)}`}>{location.telephone}</a>
 					</div>
-
 					<ReactMarkdown source={location.address.childMarkdownRemark.rawMarkdownBody} />
 				</Column>
 				<Column m={1} l={2} />
