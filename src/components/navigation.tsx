@@ -94,8 +94,8 @@ const MobileNavigation: React.FC<WithClassName> = ({className}) => {
 						height: 65
 					}}>
 					<Stretch justify="flex-end">
-						<Link to="/blog/">Blog</Link>
-						<Link to="/gallery/">Gallery</Link>
+						<Link to="/services">Service</Link>
+						<Link to="/location">Location</Link>
 					</Stretch>
 					<HomeLink
 						to="/"
@@ -105,8 +105,8 @@ const MobileNavigation: React.FC<WithClassName> = ({className}) => {
 						<Logo />
 					</HomeLink>
 					<Stretch>
-						<Link to="/services">Service</Link>
 						<Link to="/products/">Products</Link>
+						<Link to="/gallery/">Gallery</Link>
 					</Stretch>
 				</Nav>
 			</Header>
@@ -132,8 +132,8 @@ const MainNavigation: React.FC<WithClassName> = ({className}) => {
 						height: offset
 					}}>
 					<Stretch justify="flex-end">
-						<Link to="/blog/">Blog</Link>
-						<Link to="/gallery/">Gallery</Link>
+						<Link to="/services">Service</Link>
+						<Link to="/location/">Location</Link>
 					</Stretch>
 					<HomeLink
 						to="/"
@@ -144,8 +144,9 @@ const MainNavigation: React.FC<WithClassName> = ({className}) => {
 						<Logo />
 					</HomeLink>
 					<Stretch>
-						<Link to="/services">Service</Link>
 						<Link to="/products/">Products</Link>
+						<Link to="/gallery/">Gallery</Link>
+						<Link to="/blog/">Blog</Link>
 					</Stretch>
 				</Nav>
 			</Header>

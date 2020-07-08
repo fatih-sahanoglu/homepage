@@ -66,19 +66,19 @@ export const Footer: React.FC = () => (
 							<Link to="/services/ladies">Ladies</Link>
 							<Link to="/services/youngsters">Youngsters</Link>
 							<Link to="/services/beauty">Beauty</Link>
+						</Nav>
+					</Column>
+					<Column m={4} l={3} raw>
+						<Nav>
 							<Link to="/products/">Products</Link>
-						</Nav>
-					</Column>
-					<Column m={4} l={3} raw>
-						<Nav>
-							<Link to="/blog/">Blog</Link>
 							<Link to="/gallery/">Gallery</Link>
+							<Link to="/blog/">Blog</Link>
 						</Nav>
 					</Column>
 					<Column m={4} l={3} raw>
 						<Nav>
-							<Link to="/contact/">Contact</Link>
 							<Link to="/location/">Location</Link>
+							<Link to="/contact/">Contact</Link>
 							<Link to="/impressum/">Impressum</Link>
 						</Nav>
 					</Column>

@@ -38,7 +38,7 @@ function GalleryIndex(props) {
 												center>
 												{post.node.title}
 											</FluidType>
-											<Spacing size="m" />
+											<Spacing size="xs" />
 											<Cover>
 												<GalleryImage
 													alt={image.title}

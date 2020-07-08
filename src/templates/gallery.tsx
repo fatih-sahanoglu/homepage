@@ -21,7 +21,7 @@ function GalleryTemplate(props) {
 					<FluidType as="h1" minFontSize={40} maxFontSize={100} center>
 						{post.title}
 					</FluidType>
-					<Spacing size="l" />
+					<Spacing size="m" />
 				</Column>
 				{post.images.map((image, i) => {
 					return (
