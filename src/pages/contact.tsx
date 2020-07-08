@@ -6,10 +6,12 @@ import Layout from "../components/layout";
 import {Column, Row} from "../components/grid";
 import {Contentful} from "../components/elements";
 import ContactForm from "../components/contact-form";
-
+import ReactMarkdown from "react-markdown";
+const toPhone = (phone: string) => phone.replace("+", "00").replace(/[\s+-]/g, "");
 const ContactPage = props => {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
 	const slots = get(props, "data.contentfulPage.slots");
+	const location = get(props, "data.contentfulLocation");
 	return (
 		<Layout>
 			<Helmet title={`${siteTitle} | Contact`} />
@@ -17,6 +19,15 @@ const ContactPage = props => {
 				<Column raw>
 					<h1>Contact</h1>
 				</Column>
+				<Column m={1} l={2} />
+				<Column m={6} l={8}>
+					<div>
+						<a href={`tel:${toPhone(location.telephone)}`}>{location.telephone}</a>
+					</div>
+
+					<ReactMarkdown source={location.address.childMarkdownRemark.rawMarkdownBody} />
+				</Column>
+				<Column m={1} l={2} />
 				{slots.map(({__typename, id, ...props}) => {
 					return (
 						<Column key={id}>
@@ -37,6 +48,14 @@ export const pageQuery = graphql`
 		site {
 			siteMetadata {
 				title
+			}
+		}
+		contentfulLocation {
+			telephone
+			address {
+				childMarkdownRemark {
+					rawMarkdownBody
+				}
 			}
 		}
 		contentfulPage(slug: {eq: "contact"}) {
