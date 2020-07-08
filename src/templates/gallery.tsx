@@ -8,6 +8,7 @@ import {Spacing} from "../components/spacing";
 import {Img} from "../components/image";
 import {ParallaxBox} from "../components/parallax";
 import {Cover, GalleryImage} from "../components/cover";
+import FluidType from "../components/fluid-type";
 
 function GalleryTemplate(props) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
@@ -16,11 +17,17 @@ function GalleryTemplate(props) {
 		<Layout>
 			<Helmet title={`${post.title} | ${siteTitle}`} />
 			<Row>
-				<Column>
-					<h1 style={{textAlign: "center", fontSize: "5rem"}}>{post.title}</h1>
+				<Column raw>
+					<Spacing size="l" />
+					<FluidType
+						as="h1"
+						style={{textAlign: "center"}}
+						minFontSize={40}
+						maxFontSize={100}>
+						{post.title}
+					</FluidType>
+					<Spacing size="l" />
 				</Column>
-			</Row>
-			<Row>
 				{post.images.map((image, i) => {
 					return (
 						<React.Fragment key={`${image.id}:${i}`}>

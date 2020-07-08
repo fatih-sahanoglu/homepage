@@ -8,6 +8,7 @@ import {Spacing} from "../components/spacing";
 import {Cover, GalleryImage} from "../components/cover";
 import {ParallaxBox} from "../components/parallax";
 import Helmet from "react-helmet";
+import FluidType from "../components/fluid-type";
 
 function ServicesIndex(props) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
@@ -30,7 +31,14 @@ function ServicesIndex(props) {
 									<Spacing size="m" />
 									<ParallaxBox index={i}>
 										<Link to={`/services/${post.node.slug}`}>
-											<Title>{post.node.title}</Title>
+											<FluidType
+												as="h3"
+												style={{textAlign: "center"}}
+												minFontSize={40}
+												maxFontSize={100}>
+												{post.node.title}
+											</FluidType>
+											<Spacing size="m" />
 											<Cover>
 												<GalleryImage
 													alt={image.title}

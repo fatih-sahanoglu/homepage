@@ -50,7 +50,12 @@ const ProductTemplate: React.FC = props => {
 			<Helmet title={`${post.title} | ${siteTitle}`} />
 			<Row>
 				<Column raw>
-					<FluidType minFontSize={30} maxFontSize={70} as="h1">
+					<Spacing size="l" />
+					<FluidType
+						as="h1"
+						style={{textAlign: "center"}}
+						minFontSize={40}
+						maxFontSize={100}>
 						{post.title}
 					</FluidType>
 					<Spacing size="l" />
