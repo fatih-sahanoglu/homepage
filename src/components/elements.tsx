@@ -1,4 +1,3 @@
-import Vimeo from "@u-wave/react-vimeo";
 import styled from "styled-components";
 import {Box, Column, Grid, Row, Stage} from "./grid";
 import React from "react";
@@ -77,16 +76,6 @@ export const colors = {
 	green: "hsl(120, 30%, 20%)",
 	blue: "hsl(200, 30%, 20%)",
 	purple: "hsl(280, 30%, 20%)"
-};
-
-const Browser: React.FC = ({children}) => {
-	const [content, setContent] = React.useState<React.ReactNode>(null);
-	React.useEffect(() => {
-		if (typeof window !== "undefined") {
-			setContent(children);
-		}
-	}, [setContent, children]);
-	return <>{content}</>;
 };
 
 export const components = {
@@ -191,11 +180,7 @@ export const components = {
 		return <CustomMap lat={location.lat} lon={location.lon} />;
 	},
 	ContentfulVideo: ({vimeo}) => {
-		return (
-			<Browser>
-				<Vimeo video={vimeo} responsive />
-			</Browser>
-		);
+		return null;
 	},
 	error: () => <div>Error</div>
 };
