@@ -24,7 +24,7 @@ function ProductsIndex(props) {
 						<React.Fragment key={id}>
 							<Column m={i % 2} l={i % 2} />
 							<Column
-								m={(i % 3) + (i % 3 === 2 ? 2 : 1)}
+								m={(i % 3) + (i % 3 === 0 ? 3 : 2)}
 								l={(i % 3) + (i % 3 === 2 ? 5 : 4)}
 								flex>
 								<Box alignSelf="center" removePadding>
@@ -34,8 +34,8 @@ function ProductsIndex(props) {
 											<FluidType
 												as="h3"
 												style={{textAlign: "center"}}
-												minFontSize={40}
-												maxFontSize={100}>
+												minFontSize={30}
+												maxFontSize={70}>
 												{post.node.title}
 											</FluidType>
 											<Spacing size="m" />
@@ -50,7 +50,7 @@ function ProductsIndex(props) {
 									<Spacing size="m" />
 								</Box>
 							</Column>
-							<Column m={1} l={1} />
+							<Column m={i % 2} l={1} />
 							<Column m={(i + 1) % 3} l={(i + 1) % 3} />
 						</React.Fragment>
 					);
