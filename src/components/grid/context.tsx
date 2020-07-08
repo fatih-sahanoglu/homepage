@@ -38,7 +38,7 @@ export const useMediaQuery = ({query}: {query: string}): boolean => {
 };
 
 export const GridProvider: React.FC<GridContextProps> = ({children, grid}) => {
-	const xl = useMediaQuery({query: grid.mq.l});
+	const xl = useMediaQuery({query: grid.mq.xl});
 	const l = useMediaQuery({query: grid.mq.l});
 	const m = useMediaQuery({query: grid.mq.m});
 	const s = useMediaQuery({query: grid.mq.s});

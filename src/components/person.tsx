@@ -1,12 +1,11 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
 export const Person = styled.div`
 	position: sticky;
-	top: ${({
-		theme: {
-			components: {
-				header: {minHeight}
-			}
+	top: calc(1em + 65px);
+	${({theme}) => css`
+		@media ${theme.grid.mq.m} {
+			top: calc(1em + ${theme.components.header.minHeight}px);
 		}
-	}) => `${minHeight}px`};
+	`};
 `;

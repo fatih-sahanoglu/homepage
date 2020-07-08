@@ -81,6 +81,95 @@ const Header = styled.div`
 	right: 0;
 	z-index: 10;
 `;
+interface WithClassName {
+	className?: string;
+}
+const MobileNavigation: React.FC<WithClassName> = ({className}) => {
+	return (
+		<Stage className={className}>
+			<Header>
+				<Nav
+					role="navigation"
+					style={{
+						height: 65
+					}}>
+					<Stretch justify="flex-end">
+						<Link to="/blog/">Blog</Link>
+						<Link to="/gallery/">Gallery</Link>
+					</Stretch>
+					<HomeLink
+						to="/"
+						style={{
+							fontSize: "2em"
+						}}>
+						<Logo />
+					</HomeLink>
+					<Stretch>
+						<Link to="/services">Service</Link>
+						<Link to="/products/">Products</Link>
+					</Stretch>
+				</Nav>
+			</Header>
+		</Stage>
+	);
+};
+
+const MainNavigation: React.FC<WithClassName> = ({className}) => {
+	const {
+		components: {header, logo}
+	} = useTheme();
+	const {viewport} = useGrid();
+	const scrollY = useScrollY();
+	const minSizeDiff = header.height - header.minHeight;
+	const offset = header.height - minMax(0, minSizeDiff, scrollY);
+	const scale = offset / header.height;
+	return (
+		<Stage className={className}>
+			<Header>
+				<Nav
+					role="navigation"
+					style={{
+						height: offset
+					}}>
+					<Stretch justify="flex-end">
+						<Link to="/blog/">Blog</Link>
+						<Link to="/gallery/">Gallery</Link>
+					</Stretch>
+					<HomeLink
+						to="/"
+						style={{
+							fontSize: logo.size,
+							transform: `scale3d(${scale}, ${scale}, 1)`
+						}}>
+						<Logo />
+					</HomeLink>
+					<Stretch>
+						<Link to="/services">Service</Link>
+						<Link to="/products/">Products</Link>
+					</Stretch>
+				</Nav>
+			</Header>
+		</Stage>
+	);
+};
+
+const StyledMobileNavigation = styled(MobileNavigation)`
+	margin-bottom: 65px;
+	${({theme}) => css`
+		@media ${theme.grid.mq.m} {
+			display: none;
+		}
+	`};
+`;
+const StyledMainNavigation = styled(MainNavigation)`
+	${({theme}) => css`
+		margin-bottom: ${theme.components.header.height}px;
+		display: none;
+		@media ${theme.grid.mq.m} {
+			display: block;
+		}
+	`};
+`;
 
 const Navigation: React.FC = () => {
 	const {
@@ -89,36 +178,12 @@ const Navigation: React.FC = () => {
 	const {viewport} = useGrid();
 	const scrollY = useScrollY();
 	const minSizeDiff = header.height - header.minHeight;
-	const offset = viewport.s ? 65 : header.height - minMax(0, minSizeDiff, scrollY);
+	const offset = viewport.mu ? header.height - minMax(0, minSizeDiff, scrollY) : 65;
 	const scale = offset / header.height;
 	return (
 		<Row>
-			<Stage style={{marginBottom: viewport.mu ? header.height : 0}}>
-				<Header>
-					<Nav
-						role="navigation"
-						style={{
-							height: offset
-						}}>
-						<Stretch justify="flex-end">
-							<Link to="/blog/">Blog</Link>
-							<Link to="/gallery/">Gallery</Link>
-						</Stretch>
-						<HomeLink
-							to="/"
-							style={{
-								fontSize: viewport.mu ? logo.size : "2em",
-								transform: viewport.mu && `scale3d(${scale}, ${scale}, 1)`
-							}}>
-							<Logo />
-						</HomeLink>
-						<Stretch>
-							<Link to="/services">Service</Link>
-							<Link to="/products/">Products</Link>
-						</Stretch>
-					</Nav>
-				</Header>
-			</Stage>
+			<StyledMainNavigation />
+			<StyledMobileNavigation />
 		</Row>
 	);
 };
