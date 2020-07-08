@@ -127,6 +127,10 @@ export const pageQuery = graphql`
 						lon
 					}
 				}
+				... on ContentfulVideo {
+					id
+					vimeo
+				}
 			}
 		}
 	}

@@ -1,3 +1,4 @@
+import Vimeo from "@u-wave/react-vimeo";
 import styled from "styled-components";
 import {Box, Column, Grid, Row, Stage} from "./grid";
 import React from "react";
@@ -9,8 +10,6 @@ import {Spacing} from "./spacing";
 import GatsbyImage from "gatsby-image";
 import {CustomMap} from "./map";
 import {ParallaxBox} from "./parallax";
-import {Link} from "gatsby";
-import {Title} from "./title";
 import {Cover, GalleryImage} from "./cover";
 
 export const Img = styled(GatsbyImage)`
@@ -79,6 +78,12 @@ export const colors = {
 	blue: "hsl(200, 30%, 20%)",
 	purple: "hsl(280, 30%, 20%)"
 };
+
+const Video = styled(Vimeo)`
+	width: 100%;
+	display: flex;
+	justify-content: center;
+`;
 export const components = {
 	ContentfulHero: ({cards}) => {
 		return (
@@ -179,6 +184,9 @@ export const components = {
 	},
 	ContentfulLocation: ({location}) => {
 		return <CustomMap lat={location.lat} lon={location.lon} />;
+	},
+	ContentfulVideo: ({vimeo}) => {
+		return <Vimeo video={vimeo} responsive />;
 	},
 	error: () => <div>Error</div>
 };
