@@ -10,6 +10,7 @@ import GatsbyImage from "gatsby-image";
 import {CustomMap} from "./map";
 import {ParallaxBox} from "./parallax";
 import {Cover, GalleryImage} from "./cover";
+import {Video} from "./video";
 
 export const Img = styled(GatsbyImage)`
 	position: absolute;
@@ -180,7 +181,7 @@ export const components = {
 		return <CustomMap lat={location.lat} lon={location.lon} />;
 	},
 	ContentfulVideo: ({vimeo}) => {
-		return null;
+		return <Video video={vimeo} responsive />;
 	},
 	error: () => <div>Error</div>
 };
