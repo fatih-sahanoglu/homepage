@@ -3,22 +3,21 @@ import {graphql, Link} from "gatsby";
 import get from "lodash/get";
 import Layout from "../components/layout";
 import {Box, Column, Row} from "../components/grid";
-import {Title} from "../components/title";
 import {Spacing} from "../components/spacing";
 import {Cover, GalleryImage} from "../components/cover";
 import {ParallaxBox} from "../components/parallax";
 import Helmet from "react-helmet";
 import FluidType from "../components/fluid-type";
 
-function ServicesIndex(props) {
+function SeminarIndex(props) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
-	const posts = get(props, "data.allContentfulServices.edges");
+	const posts = get(props, "data.allContentfulSeminar.edges");
 	return (
 		<Layout>
-			<Helmet title={`${siteTitle} | Services`} />
+			<Helmet title={`${siteTitle} | Seminars`} />
 			<Row>
 				{posts.map((post, i) => {
-					const [image] = get(post, "node.gallery.images");
+					const [image] = get(post, "node.gallery");
 					const id = get(post, "node.id");
 					return (
 						<React.Fragment key={id}>
@@ -30,7 +29,7 @@ function ServicesIndex(props) {
 								<Box alignSelf="center" removePadding>
 									<Spacing size="m" />
 									<ParallaxBox index={i}>
-										<Link to={`/services/${post.node.slug}`}>
+										<Link to={`/seminars/${post.node.slug}`}>
 											<FluidType
 												as="h3"
 												minFontSize={20}
@@ -60,16 +59,16 @@ function ServicesIndex(props) {
 	);
 }
 
-export default ServicesIndex;
+export default SeminarIndex;
 
 export const pageQuery = graphql`
-	query ServicesIndexQuery {
+	query SeminarsIndexQuery {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		allContentfulServices {
+		allContentfulSeminar {
 			edges {
 				node {
 					id
@@ -77,23 +76,10 @@ export const pageQuery = graphql`
 					title
 					name
 					gallery {
-						images {
-							title
-							description
-							fluid(maxWidth: 800) {
-								...GatsbyContentfulFluid_withWebp
-							}
-						}
-					}
-					service {
-						id
-						name
-						price
-						description {
-							id
-							childMarkdownRemark {
-								rawMarkdownBody
-							}
+						title
+						description
+						fluid(maxWidth: 800) {
+							...GatsbyContentfulFluid_withWebp
 						}
 					}
 				}

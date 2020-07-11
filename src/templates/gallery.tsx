@@ -14,7 +14,7 @@ function GalleryTemplate(props) {
 	const post = get(props, "data.contentfulGallery");
 	return (
 		<Layout>
-			<Helmet title={`${post.title} | ${siteTitle}`} />
+			<Helmet title={`${post.name} | ${siteTitle}`} />
 			<Row>
 				<Column raw>
 					<Spacing size="l" />

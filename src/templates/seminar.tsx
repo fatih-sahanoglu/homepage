@@ -4,7 +4,7 @@ import get from "lodash/get";
 import Layout from "../components/layout";
 import ReactMarkdown from "react-markdown";
 import {Img} from "../components/image";
-import {Box, Column, Row} from "../components/grid";
+import {Box, Column, PADDING, Row} from "../components/grid";
 import {
 	Carousel,
 	CarouselNav,
@@ -17,15 +17,14 @@ import {
 import Helmet from "react-helmet";
 import {Spacing} from "../components/spacing";
 import FluidType from "../components/fluid-type";
-import {Table, Tbody, Td, Tr} from "../components/table";
 import {CenterBox, FlexStretch} from "../components/common";
 import {price} from "../utils/number";
+import {Table, Tbody, Td, Tr} from "../components/table";
 
-function ServicesTemplate(props) {
+function SeminarTemplate(props) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
-	const post = get(props, "data.contentfulServices");
-	const images = get(post, "gallery.images");
-	const autoplay = get(post, "autoplay");
+	const post = get(props, "data.contentfulSeminar");
+	const images = get(post, "gallery");
 
 	return (
 		<Layout>
@@ -41,7 +40,7 @@ function ServicesTemplate(props) {
 				<Column l={8}>
 					{images && (
 						<Box removeGutter removePadding>
-							<Carousel autoplay={autoplay}>
+							<Carousel autoplay={post.autoplay}>
 								<Slides clip={ClipSlides.right} reverse>
 									{images.map(image => (
 										<CarouselPanel raw>
@@ -63,67 +62,57 @@ function ServicesTemplate(props) {
 					)}
 				</Column>
 				<Column l={4} raw>
-					<Table>
-						<Tbody>
-							{post.service.map(service => {
-								return (
-									<Tr key={service.id}>
-										<Td>
-											<p>{service.name}</p>
-											<small>
-												{service.description && (
-													<ReactMarkdown
-														source={
-															service.description.childMarkdownRemark
-																.rawMarkdownBody
-														}
-													/>
-												)}
-											</small>
-										</Td>
-										<Td textEnd>{price(service.price)}</Td>
-									</Tr>
-								);
-							})}
-						</Tbody>
-					</Table>
+					<Box>
+						<Table>
+							<Tbody>
+								<Tr>
+									<Td>Price</Td>
+									<Td>{price(post.price)}</Td>
+								</Tr>
+								<Tr>
+									<Td>Duration</Td>
+									<Td>{post.duration}</Td>
+								</Tr>
+							</Tbody>
+						</Table>
+						{post.description && (
+							<ReactMarkdown
+								source={post.description.childMarkdownRemark.rawMarkdownBody}
+							/>
+						)}
+					</Box>
 				</Column>
 			</Row>
 		</Layout>
 	);
 }
 
-export default ServicesTemplate;
+export default SeminarTemplate;
 
 export const pageQuery = graphql`
-	query ServicesBySlug($slug: String!) {
+	query SeminarBySlug($slug: String!) {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		contentfulServices(slug: {eq: $slug}) {
+		contentfulSeminar(slug: {eq: $slug}) {
 			title
 			name
 			autoplay
-			gallery {
-				images {
-					fluid(maxWidth: 800, maxHeight: 500) {
-						...GatsbyContentfulFluid_withWebp
-					}
-					title
+			price
+			duration
+			description {
+				id
+				childMarkdownRemark {
+					rawMarkdownBody
 				}
 			}
-			service {
-				id
-				name
-				price
-				description {
-					id
-					childMarkdownRemark {
-						rawMarkdownBody
-					}
+			gallery {
+				fluid(maxWidth: 800, maxHeight: 500) {
+					...GatsbyContentfulFluid_withWebp
 				}
+				title
 			}
 		}
 	}

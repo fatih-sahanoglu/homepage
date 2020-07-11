@@ -9,6 +9,7 @@ exports.createPages = ({graphql, actions}) => {
 		const servicesPost = path.resolve("./src/templates/services.tsx");
 		const galleryPost = path.resolve("./src/templates/gallery.tsx");
 		const productPost = path.resolve("./src/templates/product.tsx");
+		const seminarPost = path.resolve("./src/templates/seminar.tsx");
 		resolve(
 			graphql(
 				`
@@ -45,6 +46,14 @@ exports.createPages = ({graphql, actions}) => {
 								}
 							}
 						}
+						allContentfulSeminar {
+							edges {
+								node {
+									title
+									slug
+								}
+							}
+						}
 					}
 				`
 			).then(result => {
@@ -68,6 +77,16 @@ exports.createPages = ({graphql, actions}) => {
 					createPage({
 						path: `/services/${post.node.slug}/`,
 						component: servicesPost,
+						context: {
+							slug: post.node.slug
+						}
+					});
+				});
+				const seminars = result.data.allContentfulSeminar.edges;
+				seminars.forEach(post => {
+					createPage({
+						path: `/seminars/${post.node.slug}/`,
+						component: seminarPost,
 						context: {
 							slug: post.node.slug
 						}

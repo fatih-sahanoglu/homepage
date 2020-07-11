@@ -48,12 +48,12 @@ const ProductTemplate: React.FC = props => {
 
 	return (
 		<Layout>
-			<Helmet title={`${post.title} | ${siteTitle}`} />
+			<Helmet title={`${post.name} | ${siteTitle}`} />
 			<Row>
 				<Column raw>
 					<Spacing size="l" />
 					<FluidType as="h1" minFontSize={40} maxFontSize={100} center>
-						{post.title}
+						{post.name}
 					</FluidType>
 					<Spacing size="l" />
 				</Column>

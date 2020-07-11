@@ -70,6 +70,7 @@ export const Footer: React.FC = () => (
 							<Link to="/services/ladies">Ladies</Link>
 							<Link to="/services/youngsters">Youngsters</Link>
 							<Link to="/services/beauty">Beauty</Link>
+							<Link to="/seminars">Seminars</Link>
 						</Nav>
 					</Column>
 					<Column m={4} l={3} raw>
