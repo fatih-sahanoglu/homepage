@@ -144,12 +144,12 @@ export const Carousel: React.FC<CarouselProps> = ({children, threshold = 10, aut
 
 	return (
 		<CarouselProvider config={config}>
-			<div onMouseDown={handleMouseDown} onMouseOver={stopAnimation}>
+			<div onMouseLeave={continueAnimation} onMouseEnter={stopAnimation}>
 				<SlidesWrapper
 					reverse={reverse}
 					clip={clip}
 					ref={slidesRef}
-					onMouseLeave={continueAnimation}
+					onMouseDown={handleMouseDown}
 					onTouchStart={handleTouchStart}>
 					{slides}
 				</SlidesWrapper>
