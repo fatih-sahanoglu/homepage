@@ -27,6 +27,8 @@ export const Cover = styled.div`
 	position: relative;
 	display: flex;
 	overflow: hidden;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
 	&:hover {
 		${Hover} {
 			transform: translate3d(0, 0, 0);
