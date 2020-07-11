@@ -37,6 +37,7 @@ const ProductTemplate: React.FC = props => {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
 	const post = get(props, "data.contentfulProduct");
 	const images = get(post, "gallery.images");
+	const autoplay = get(post, "autoplay");
 	const tabs = {
 		"What it is": post.description.childMarkdownRemark.rawMarkdownBody,
 		"How to use": post.usage.childMarkdownRemark.rawMarkdownBody,
@@ -59,7 +60,7 @@ const ProductTemplate: React.FC = props => {
 				<Column l={8}>
 					{images && (
 						<Box removeGutter removePadding>
-							<Carousel>
+							<Carousel autoplay={autoplay}>
 								<Slides clip={ClipSlides.right} reverse>
 									{images.map(image => (
 										<CarouselPanel raw>
@@ -125,6 +126,7 @@ export const pageQuery = graphql`
 			id
 			title
 			price
+			autoplay
 			description {
 				childMarkdownRemark {
 					rawMarkdownBody

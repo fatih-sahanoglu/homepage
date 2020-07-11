@@ -80,10 +80,10 @@ export const colors = {
 };
 
 export const components = {
-	ContentfulHero: ({cards}) => {
+	ContentfulHero: ({cards, autoplay}) => {
 		return (
 			<RelativeStage>
-				<Carousel>
+				<Carousel autoplay={autoplay}>
 					<Slides>
 						{cards.map(({backgroundColor, backgroundImage, body, headline, id}) => {
 							const bodyMD = get(body, "childMarkdownRemark.rawMarkdownBody");
@@ -187,7 +187,6 @@ export const components = {
 };
 
 export const Contentful: React.FC<{contentType}> = ({contentType, ...props}) => {
-	console.log(contentType, props);
 	const Component = components[contentType] || components.error;
 	return <Component {...props} />;
 };

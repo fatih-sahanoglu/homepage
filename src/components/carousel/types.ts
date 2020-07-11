@@ -8,6 +8,7 @@ export interface VisiblePanelsConfig {
 	l?: number;
 }
 export interface CarouselProps {
+	autoplay?: boolean;
 	threshold?: number;
 }
 

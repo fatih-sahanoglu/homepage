@@ -82,6 +82,7 @@ export const pageQuery = graphql`
 				}
 				... on ContentfulHero {
 					id
+					autoplay
 					cards {
 						id
 						backgroundColor

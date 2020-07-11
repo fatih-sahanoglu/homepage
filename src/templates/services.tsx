@@ -64,6 +64,7 @@ function ServicesTemplate(props) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
 	const post = get(props, "data.contentfulServices");
 	const images = get(post, "gallery.images");
+	const autoplay = get(post, "autoplay");
 
 	return (
 		<Layout>
@@ -79,7 +80,7 @@ function ServicesTemplate(props) {
 				<Column l={8}>
 					{images && (
 						<Box removeGutter removePadding>
-							<Carousel>
+							<Carousel autoplay={autoplay}>
 								<Slides clip={ClipSlides.right} reverse>
 									{images.map(image => (
 										<CarouselPanel raw>
@@ -143,6 +144,7 @@ export const pageQuery = graphql`
 		contentfulServices(slug: {eq: $slug}) {
 			title
 			name
+			autoplay
 			gallery {
 				images {
 					fluid(maxWidth: 800, maxHeight: 500) {

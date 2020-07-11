@@ -5,7 +5,16 @@ import {useMouseMove, useSlides, useContent} from "./hooks";
 import {CarouselProvider} from "./context";
 import {SlidesWrapper} from "./Slides";
 
-export const Carousel: React.FC<CarouselProps> = ({children, threshold = 10}) => {
+const useInterval = (callback: () => void, delay: number) => {
+	React.useEffect(() => {
+		if (delay !== null) {
+			const id = setInterval(callback, delay);
+			return () => clearInterval(id);
+		}
+	}, [delay, callback]);
+};
+
+export const Carousel: React.FC<CarouselProps> = ({children, threshold = 10, autoplay}) => {
 	const slidesRef = React.useRef();
 	const {viewport} = useGrid();
 	const [activeSlide, setActiveSlide] = React.useState(0);
@@ -126,18 +135,26 @@ export const Carousel: React.FC<CarouselProps> = ({children, threshold = 10}) =>
 	React.useEffect(() => {
 		setActiveSlide(state => Math.max(0, Math.min(state, slidesCount - visiblePanels)));
 	}, [setActiveSlide, slidesCount, visiblePanels]);
+	const [loop, setLoop] = React.useState(autoplay);
+	const stopAnimation = React.useCallback(() => setLoop(false), [setLoop]);
+	const continueAnimation = React.useCallback(() => setLoop(autoplay), [setLoop, autoplay]);
+	useInterval(() => {
+		loop && setActiveSlide(state => (state + 1) % (slidesCount - visiblePanels + 1));
+	}, loop && 5000);
 
 	return (
 		<CarouselProvider config={config}>
-			<SlidesWrapper
-				reverse={reverse}
-				clip={clip}
-				ref={slidesRef}
-				onMouseDown={handleMouseDown}
-				onTouchStart={handleTouchStart}>
-				{slides}
-			</SlidesWrapper>
-			{content}
+			<div onMouseDown={handleMouseDown} onMouseOver={stopAnimation}>
+				<SlidesWrapper
+					reverse={reverse}
+					clip={clip}
+					ref={slidesRef}
+					onMouseLeave={continueAnimation}
+					onTouchStart={handleTouchStart}>
+					{slides}
+				</SlidesWrapper>
+				{content}
+			</div>
 		</CarouselProvider>
 	);
 };
