@@ -29,6 +29,8 @@ export const Carousel: React.FC<CarouselProps> = ({children, threshold = 10, aut
 				children: slidePanels,
 				reverse,
 				clip,
+				relative,
+				height,
 				visiblePanelsConfig = {s: 1},
 				...slidesProps
 			}
@@ -147,6 +149,8 @@ export const Carousel: React.FC<CarouselProps> = ({children, threshold = 10, aut
 			<div onMouseLeave={continueAnimation} onMouseEnter={stopAnimation}>
 				<SlidesWrapper
 					reverse={reverse}
+					relative={relative}
+					height={height}
 					clip={clip}
 					ref={slidesRef}
 					onMouseDown={handleMouseDown}

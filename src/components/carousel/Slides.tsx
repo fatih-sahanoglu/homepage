@@ -9,13 +9,21 @@ export const Slides: React.FC<SlidesProps> = ({children}) => <>{children}</>;
 
 export const StyledPanel = styled(Column)`
 	position: relative;
-	touch-action: pan-y;
+	touch-action: pan-x;
 	user-select: none;
 	img,
 	a {
 		-webkit-user-drag: none;
 		-webkit-touch-callout: none;
 	}
+`;
+
+const AbsolutePanel = styled(StyledPanel)`
+	position: ${({index}) => (index === 0 ? "relative" : "absolute")};
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 `;
 
 export const CarouselPanel: React.FC<CarouselPanelProps> = ({children, springConfig, ...props}) => {
@@ -35,6 +43,31 @@ export const CarouselPanel: React.FC<CarouselPanelProps> = ({children, springCon
 			xs={`calc(var(${COLCOUNT}) / ${visiblePanels})`}>
 			{children}
 		</StyledPanel>
+	);
+};
+
+export const FadePanel: React.FC<CarouselPanelProps & Indexed> = ({
+	children,
+	springConfig,
+	index,
+	...props
+}) => {
+	const {activeSlide, visiblePanels, reverse, offsetX} = useCarousel();
+	const isActive = activeSlide === index;
+	const spring = useSpring({
+		config: offsetX ? {...springConfig, duration: 0} : springConfig,
+		opacity: isActive ? 1 : 0
+	});
+	return (
+		<AbsolutePanel
+			{...props}
+			as={animated.div}
+			raw
+			index={index}
+			style={spring}
+			xs={`calc(var(${COLCOUNT}) / ${visiblePanels})`}>
+			{children}
+		</AbsolutePanel>
 	);
 };
 
@@ -69,8 +102,10 @@ export const LazyPanel: React.FC<CarouselPanelProps & Indexed> = ({
 export const SlidesWrapper = styled.div<SlidesWrapperProps>`
 	display: flex;
 	touch-action: cross-slide-x;
-	${({reverse}) => css`
+	${({reverse, relative, height}) => css`
 		flex-direction: ${reverse ? "row-reverse" : "row"};
+		position: ${relative ? "relative" : "initial"};
+		height: ${height || "auto"};
 	`};
 	${({clip}) => {
 		switch (clip) {

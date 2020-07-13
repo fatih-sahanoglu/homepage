@@ -11,6 +11,7 @@ import {
 	CarouselPageNumbers,
 	CarouselPanel,
 	ClipSlides,
+	FadePanel,
 	Nav,
 	Slides
 } from "../components/carousel";
@@ -26,7 +27,6 @@ function ServicesTemplate(props) {
 	const post = get(props, "data.contentfulServices");
 	const images = get(post, "gallery.images");
 	const autoplay = get(post, "autoplay");
-
 	return (
 		<Layout>
 			<Helmet title={`${post.name} | ${siteTitle}`} />
@@ -42,11 +42,11 @@ function ServicesTemplate(props) {
 					{images && (
 						<Box removeGutter removePadding>
 							<Carousel autoplay={autoplay}>
-								<Slides clip={ClipSlides.right} reverse>
-									{images.map(image => (
-										<CarouselPanel raw>
+								<Slides clip={ClipSlides.right} reverse relative>
+									{images.map((image, i) => (
+										<FadePanel index={i} raw>
 											<Img alt={image.title} fluid={image.fluid} />
-										</CarouselPanel>
+										</FadePanel>
 									))}
 								</Slides>
 								<Nav>

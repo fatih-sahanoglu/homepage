@@ -11,6 +11,7 @@ import {
 	CarouselPageNumbers,
 	CarouselPanel,
 	ClipSlides,
+	FadePanel,
 	Nav,
 	Slides
 } from "../components/carousel";
@@ -41,11 +42,11 @@ function SeminarTemplate(props) {
 					{images && (
 						<Box removeGutter removePadding>
 							<Carousel autoplay={post.autoplay}>
-								<Slides clip={ClipSlides.right} reverse>
-									{images.map(image => (
-										<CarouselPanel raw>
+								<Slides clip={ClipSlides.right} reverse relative>
+									{images.map((image, i) => (
+										<FadePanel index={i} raw>
 											<Img alt={image.title} fluid={image.fluid} />
-										</CarouselPanel>
+										</FadePanel>
 									))}
 								</Slides>
 								<Nav>

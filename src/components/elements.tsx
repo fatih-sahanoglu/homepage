@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {Box, Column, Grid, Row, Stage} from "./grid";
 import React from "react";
-import {Carousel, CarouselNav, CarouselPanel, Slides} from "./carousel";
+import {Carousel, CarouselNav, FadePanel, Slides} from "./carousel";
 import get from "lodash/get";
 import ReactMarkdown from "react-markdown";
 import {Stretch} from "./spacing/stretch";
@@ -60,6 +60,7 @@ export const RelativeStage = styled(Stage)`
 	overflow: hidden;
 	position: relative;
 	scroll-snap-align: start;
+	height: 100vh;
 `;
 export const AbsoluteGrid = styled(Grid)`
 	position: absolute;
@@ -85,11 +86,11 @@ export const components = {
 			<RelativeStage>
 				<Carousel autoplay={autoplay}>
 					<Slides>
-						{cards.map(({backgroundColor, backgroundImage, body, headline, id}) => {
+						{cards.map(({backgroundColor, backgroundImage, body, headline, id}, i) => {
 							const bodyMD = get(body, "childMarkdownRemark.rawMarkdownBody");
 							const headlineMD = get(headline, "childMarkdownRemark.rawMarkdownBody");
 							return (
-								<CarouselPanel key={id}>
+								<FadePanel key={id} index={i}>
 									<RelativeBox removeGutter>
 										<Background
 											style={{
@@ -128,7 +129,7 @@ export const components = {
 											</Grid>
 										</Content>
 									</RelativeBox>
-								</CarouselPanel>
+								</FadePanel>
 							);
 						})}
 					</Slides>

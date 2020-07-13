@@ -21,6 +21,8 @@ export enum ClipSlides {
 export interface SlidesWrapperProps {
 	clip?: ClipSlides;
 	reverse?: boolean;
+	relative?: boolean;
+	height?: string;
 }
 
 export interface Indexed {
@@ -29,6 +31,8 @@ export interface Indexed {
 
 export interface SlidesProps extends ColSpan {
 	reverse?: boolean;
+	relative?: boolean;
+	height?: string;
 	visiblePanelsConfig?: VisiblePanelsConfig;
 	clip?: ClipSlides;
 	children?: React.ReactNode;
