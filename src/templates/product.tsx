@@ -21,6 +21,7 @@ import styled from "styled-components";
 import {Stretch} from "../components/spacing/stretch";
 import Helmet from "react-helmet";
 import {Tab, TabBar, TabContent, useTabs} from "../components/tabs";
+import {injectIntl} from "gatsby-plugin-intl";
 
 const CenterBox = styled(Box)`
 	align-items: center;
@@ -64,7 +65,7 @@ const ProductTemplate: React.FC = props => {
 							<Carousel autoplay={autoplay}>
 								<Slides clip={ClipSlides.right} reverse relative>
 									{images.map((image, i) => (
-										<FadePanel index={i} raw>
+										<FadePanel key={`${image.title}:${i}`} index={i} raw>
 											<Img alt={image.title} fluid={image.fluid} />
 										</FadePanel>
 									))}
@@ -114,18 +115,19 @@ const ProductTemplate: React.FC = props => {
 	);
 };
 
-export default ProductTemplate;
+export default injectIntl(ProductTemplate);
 
 export const pageQuery = graphql`
-	query ProductBySlug($slug: String!) {
+	query ProductBySlug($slug: String!, $locale: String) {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		contentfulProduct(slug: {eq: $slug}) {
+		contentfulProduct(slug: {eq: $slug}, node_locale: {eq: $locale}) {
 			id
 			title
+			name
 			price
 			autoplay
 			description {

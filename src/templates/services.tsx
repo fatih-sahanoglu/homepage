@@ -21,6 +21,7 @@ import FluidType from "../components/fluid-type";
 import {Table, Tbody, Td, Tr} from "../components/table";
 import {CenterBox, FlexStretch} from "../components/common";
 import {price} from "../utils/number";
+import {injectIntl} from "gatsby-plugin-intl";
 
 function ServicesTemplate(props) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
@@ -44,7 +45,7 @@ function ServicesTemplate(props) {
 							<Carousel autoplay={autoplay}>
 								<Slides clip={ClipSlides.right} reverse relative>
 									{images.map((image, i) => (
-										<FadePanel index={i} raw>
+										<FadePanel key={`${image.title}:${i}`} index={i} raw>
 											<Img alt={image.title} fluid={image.fluid} />
 										</FadePanel>
 									))}
@@ -93,16 +94,16 @@ function ServicesTemplate(props) {
 	);
 }
 
-export default ServicesTemplate;
+export default injectIntl(ServicesTemplate);
 
 export const pageQuery = graphql`
-	query ServicesBySlug($slug: String!) {
+	query ServicesBySlug($slug: String!, $locale: String) {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		contentfulServices(slug: {eq: $slug}) {
+		contentfulServices(slug: {eq: $slug}, node_locale: {eq: $locale}) {
 			title
 			name
 			autoplay

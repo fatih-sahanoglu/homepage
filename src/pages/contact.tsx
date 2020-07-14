@@ -7,7 +7,7 @@ import {Column, Row} from "../components/grid";
 import {Contentful} from "../components/elements";
 import ContactForm from "../components/contact-form";
 import ReactMarkdown from "react-markdown";
-const toPhone = (phone: string) => phone.replace("+", "00").replace(/[\s+-]/g, "");
+import {toPhone} from "../utils/number";
 const ContactPage = props => {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
 	const slots = get(props, "data.contentfulPage.slots");

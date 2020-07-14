@@ -4,16 +4,17 @@ import Img from "gatsby-image";
 import {Column, Row} from "./grid";
 import {Spacing} from "./spacing";
 import ReactMarkdown from "react-markdown";
+import {injectIntl} from "gatsby-plugin-intl";
 
-export default ({article}) => (
+const ArticlePreview = ({article, intl}) => (
 	<Row raw>
 		<Column>
 			<h3>
-				<Link to={`/blog/${article.slug}`}>{article.title}</Link>
+				<Link to={`/${intl.locale}/blog/${article.slug}`}>{article.title}</Link>
 			</h3>
 		</Column>
 		<Column m={4}>
-			<Link to={`/blog/${article.slug}`}>
+			<Link to={article.slug}>
 				<Img alt="" fluid={article.heroImage.fluid} />
 			</Link>
 			<Spacing size="s" />
@@ -29,3 +30,4 @@ export default ({article}) => (
 		</Column>
 	</Row>
 );
+export default injectIntl(ArticlePreview);

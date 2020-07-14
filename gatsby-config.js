@@ -40,6 +40,19 @@ module.exports = {
 				displayName: true
 			}
 		},
+		{
+			resolve: `gatsby-plugin-intl`,
+			options: {
+				// language JSON resource path
+				path: `${__dirname}/src/intl`,
+				// supported language
+				languages: ["en-US", "de-DE"],
+				// language file path
+				defaultLanguage: "en-US",
+				// option to redirect to `/en` when connecting `/`
+				redirect: true
+			}
+		},
 		"gatsby-transformer-remark",
 		"gatsby-transformer-sharp",
 		"gatsby-plugin-react-helmet",

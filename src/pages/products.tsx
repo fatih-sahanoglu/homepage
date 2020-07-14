@@ -4,11 +4,11 @@ import get from "lodash/get";
 import Layout from "../components/layout";
 import {Box, Column, Row} from "../components/grid";
 import {Spacing} from "../components/spacing";
-import {Title} from "../components/title";
 import {Cover, GalleryImage} from "../components/cover";
 import {ParallaxBox} from "../components/parallax";
 import Helmet from "react-helmet";
 import FluidType from "../components/fluid-type";
+import {injectIntl} from "gatsby-plugin-intl";
 
 function ProductsIndex(props) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
@@ -30,13 +30,13 @@ function ProductsIndex(props) {
 								<Box alignSelf="center" removePadding>
 									<Spacing size="m" />
 									<ParallaxBox index={i}>
-										<Link to={`/products/${post.node.slug}`}>
+										<Link to={post.node.slug}>
 											<FluidType
 												as="h3"
 												minFontSize={20}
 												maxFontSize={40}
 												center>
-												{post.node.title}
+												{post.node.name}
 											</FluidType>
 											<Spacing size="xs" />
 											<Cover>
@@ -60,21 +60,22 @@ function ProductsIndex(props) {
 	);
 }
 
-export default ProductsIndex;
+export default injectIntl(ProductsIndex);
 
 export const pageQuery = graphql`
-	query ProductsIndexQuery {
+	query ProductsIndexQuery($locale: String) {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		allContentfulProduct {
+		allContentfulProduct(filter: {node_locale: {eq: $locale}}) {
 			edges {
 				node {
 					id
 					slug
 					title
+					name
 					gallery {
 						images {
 							id

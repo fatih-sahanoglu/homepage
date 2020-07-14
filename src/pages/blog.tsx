@@ -46,13 +46,16 @@ function BlogIndex(props) {
 export default BlogIndex;
 
 export const pageQuery = graphql`
-	query BlogIndexQuery {
+	query BlogIndexQuery($locale: String) {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		allContentfulBlogPost(sort: {fields: [publishDate], order: DESC}) {
+		allContentfulBlogPost(
+			filter: {node_locale: {eq: $locale}}
+			sort: {fields: [publishDate], order: DESC}
+		) {
 			edges {
 				node {
 					title

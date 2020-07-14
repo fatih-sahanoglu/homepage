@@ -1,8 +1,13 @@
-import styled from "styled-components";
-import {Column, Grid, Row, Stage} from "./grid";
+import styled, {css} from "styled-components";
+import {Column, Grid, PADDING, Row, Stage} from "./grid";
 import React from "react";
 import {Spacing} from "./spacing";
-import {Link} from "gatsby";
+import {graphql, Link, useStaticQuery} from "gatsby";
+import {injectIntl, IntlContextConsumer, changeLocale} from "gatsby-plugin-intl";
+import ReactMarkdown from "react-markdown";
+import {toPhone} from "../utils/number";
+import {DE} from "./flags/de";
+import {US} from "./flags/us";
 
 const Nav = styled.nav`
 	display: flex;
@@ -57,55 +62,152 @@ const Social = styled.a`
 	position: relative;
 `;
 
-export const Footer: React.FC = () => (
-	<>
-		<Spacing size="l" />
-		<FooterStage>
-			<Spacing size="l" />
-			<Grid>
-				<Row>
-					<Column m={4} l={3} raw>
-						<Nav>
-							<Link to="/services/gentlemen">Gentlemen</Link>
-							<Link to="/services/ladies">Ladies</Link>
-							<Link to="/services/youngsters">Youngsters</Link>
-							<Link to="/services/beauty">Beauty</Link>
-							<Link to="/seminars">Seminars</Link>
-						</Nav>
-					</Column>
-					<Column m={4} l={3} raw>
-						<Nav>
-							<Link to="/products/">Products</Link>
-							<Link to="/gallery/">Gallery</Link>
-							<Link to="/blog/">Blog</Link>
-						</Nav>
-					</Column>
-					<Column m={4} l={3} raw>
-						<Nav>
-							<Link to="/location/">Location</Link>
-							<Link to="/contact/">Contact</Link>
-							<Link to="/impressum/">Impressum</Link>
-						</Nav>
-					</Column>
-					<Column m={4} l={3} raw>
-						<Social
-							href="https://www.facebook.com/Fatih-Sahanoglucom-234829333300330"
-							target="_blank">
-							<Icon icon={IconType.facebook} />
-							<Hidden>Facebook</Hidden>
-						</Social>
-						<Social href="https://www.instagram.com/fatih_sahanoglu/" target="_blank">
-							<Icon icon={IconType.instagram} />
-							<Hidden>Instagram</Hidden>
-						</Social>
-						<Social href="https://vimeo.com/user85813888" target="_blank">
-							<Icon icon={IconType.vimeo} />
-							<Hidden>Vimeo</Hidden>
-						</Social>
-					</Column>
-				</Row>
-			</Grid>
-			<Spacing size="m" />
-		</FooterStage>
-	</>
+const LanguageLink = styled.button`
+	font-size: inherit;
+	border: 0;
+	padding: 0.5em;
+	margin: 0;
+	border-radius: 0;
+	appearance: none;
+	font-family: inherit;
+	text-align: left;
+	line-height: 1.5;
+	cursor: pointer;
+	background: none;
+	color: inherit;
+	${({disabled}) => css`
+		pointer-events: ${disabled ? "none" : "initial"};
+	`};
+`;
+
+const languageName = {
+	"de-DE": "Deutsch",
+	"en-US": "English"
+};
+
+const Flag = styled.span`
+	display: inline-flex;
+	height: 1em;
+	width: 1em;
+	box-shadow: 0 0 0 1px;
+
+	svg {
+		flex: 1;
+	}
+`;
+
+const Language = () => (
+	<div>
+		<IntlContextConsumer>
+			{({languages, language: currentLocale}) =>
+				languages.map(language => (
+					<LanguageLink
+						key={language}
+						onClick={() => changeLocale(language)}
+						disabled={currentLocale === language}>
+						<Flag>{language === "de-DE" ? <DE /> : <US />}</Flag>
+					</LanguageLink>
+				))
+			}
+		</IntlContextConsumer>
+	</div>
 );
+
+interface WithIntl {
+	intl?: any;
+}
+const Footer: React.FC<WithIntl> = ({intl}) => {
+	const {contentfulLocation: location} = useStaticQuery(graphql`
+		{
+			contentfulLocation {
+				telephone
+				address {
+					childMarkdownRemark {
+						rawMarkdownBody
+					}
+				}
+			}
+		}
+	`);
+	return (
+		<>
+			<Spacing size="l" />
+			<FooterStage>
+				<Spacing size="l" />
+				<Grid>
+					<Row>
+						<Column m={4} l={3} raw>
+							<Nav>
+								<Link to={`/${intl.locale}/services/gentlemen`}>
+									{intl.messages.gentlemen}
+								</Link>
+								<Link to={`/${intl.locale}/services/ladies`}>
+									{intl.messages.ladies}
+								</Link>
+								<Link to={`/${intl.locale}/services/youngsters`}>
+									{intl.messages.youngsters}
+								</Link>
+								<Link to={`/${intl.locale}/services/beauty`}>
+									{intl.messages.beauty}
+								</Link>
+								<Link to={`/${intl.locale}/seminars`}>
+									{intl.messages.seminars}
+								</Link>
+							</Nav>
+						</Column>
+						<Column m={4} l={3} raw>
+							<Nav>
+								<Link to={`/${intl.locale}/products`}>
+									{intl.messages.products}
+								</Link>
+								<Link to={`/${intl.locale}/gallery`}>{intl.messages.gallery}</Link>
+								<Link to={`/${intl.locale}/blog`}>{intl.messages.blog}</Link>
+							</Nav>
+						</Column>
+						<Column m={4} l={3} raw>
+							<Nav>
+								<Link to={`/${intl.locale}/location`}>
+									{intl.messages.location}
+								</Link>
+								<Link to={`/${intl.locale}/contact`}>{intl.messages.contact}</Link>
+								<Link to={`/${intl.locale}/impressum`}>
+									{intl.messages.imprint}
+								</Link>
+							</Nav>
+							<Social
+								href="https://www.facebook.com/Fatih-Sahanoglucom-234829333300330"
+								target="_blank">
+								<Icon icon={IconType.facebook} />
+								<Hidden>Facebook</Hidden>
+							</Social>
+							<Social
+								href="https://www.instagram.com/fatih_sahanoglu/"
+								target="_blank">
+								<Icon icon={IconType.instagram} />
+								<Hidden>Instagram</Hidden>
+							</Social>
+							<Social href="https://vimeo.com/user85813888" target="_blank">
+								<Icon icon={IconType.vimeo} />
+								<Hidden>Vimeo</Hidden>
+							</Social>
+						</Column>
+						<Column m={4} l={3} raw>
+							<Language />
+							<div>
+								<a href={`tel:${toPhone(location.telephone)}`}>
+									{location.telephone}
+								</a>
+							</div>
+							<ReactMarkdown
+								source={location.address.childMarkdownRemark.rawMarkdownBody}
+							/>
+						</Column>
+					</Row>
+				</Grid>
+				<Spacing size="m" />
+			</FooterStage>
+		</>
+	);
+};
+
+export default injectIntl(Footer);

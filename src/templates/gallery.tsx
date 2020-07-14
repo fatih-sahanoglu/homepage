@@ -8,18 +8,19 @@ import {Spacing} from "../components/spacing";
 import {ParallaxBox} from "../components/parallax";
 import {Cover, GalleryImage} from "../components/cover";
 import FluidType from "../components/fluid-type";
+import {injectIntl} from "gatsby-plugin-intl";
 
 function GalleryTemplate(props) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
 	const post = get(props, "data.contentfulGallery");
 	return (
 		<Layout>
-			<Helmet title={`${post.title} | ${siteTitle}`} />
+			<Helmet title={`${post.name} | ${siteTitle}`} />
 			<Row>
 				<Column raw>
 					<Spacing size="l" />
 					<FluidType as="h1" minFontSize={40} maxFontSize={100} center>
-						{post.title}
+						{post.name}
 					</FluidType>
 					<Spacing size="m" />
 				</Column>
@@ -51,18 +52,19 @@ function GalleryTemplate(props) {
 	);
 }
 
-export default GalleryTemplate;
+export default injectIntl(GalleryTemplate);
 
 export const pageQuery = graphql`
-	query GalleryBySlug($slug: String!) {
+	query GalleryBySlug($slug: String!, $locale: String) {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		contentfulGallery(slug: {eq: $slug}) {
+		contentfulGallery(slug: {eq: $slug}, node_locale: {eq: $locale}) {
 			id
 			title
+			name
 			images {
 				id
 				title

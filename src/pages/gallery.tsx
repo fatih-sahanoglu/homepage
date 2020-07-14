@@ -9,6 +9,7 @@ import {Cover, GalleryImage} from "../components/cover";
 import {ParallaxBox} from "../components/parallax";
 import Helmet from "react-helmet";
 import FluidType from "../components/fluid-type";
+import {injectIntl} from "gatsby-plugin-intl";
 
 function GalleryIndex(props) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
@@ -30,13 +31,13 @@ function GalleryIndex(props) {
 								<Box alignSelf="center" removePadding>
 									<Spacing size="m" />
 									<ParallaxBox index={i}>
-										<Link to={`/gallery/${post.node.slug}`}>
+										<Link to={post.node.slug}>
 											<FluidType
 												as="h3"
 												minFontSize={20}
 												maxFontSize={40}
 												center>
-												{post.node.title}
+												{post.node.name}
 											</FluidType>
 											<Spacing size="xs" />
 											<Cover>
@@ -60,21 +61,22 @@ function GalleryIndex(props) {
 	);
 }
 
-export default GalleryIndex;
+export default injectIntl(GalleryIndex);
 
 export const pageQuery = graphql`
-	query GalleryIndexQuery {
+	query GalleryIndexQuery($locale: String) {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		allContentfulGallery(filter: {showInGallery: {eq: true}}) {
+		allContentfulGallery(filter: {showInGallery: {eq: true}, node_locale: {eq: $locale}}) {
 			edges {
 				node {
 					id
 					slug
 					title
+					name
 					images {
 						id
 						title

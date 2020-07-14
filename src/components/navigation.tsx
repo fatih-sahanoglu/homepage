@@ -6,6 +6,7 @@ import {Spacing} from "./spacing";
 import {Logo} from "./logo";
 import {minMax} from "../utils/number";
 import {useTheme} from "../theme/theme";
+import {injectIntl} from "gatsby-plugin-intl";
 
 const Nav = styled.nav`
 	background: linear-gradient(to top, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0.9));
@@ -52,7 +53,7 @@ const Link = styled(HomeLink).attrs({
 	&.active {
 		box-shadow: 0 4px 0 0 currentColor;
 	}
-	font-size: 0.8em;
+	font-size: 0.75em;
 	${({theme}) => css`
 		@media ${theme.grid.mq.m} {
 			font-size: 1em;
@@ -81,10 +82,16 @@ const Header = styled.div`
 	right: 0;
 	z-index: 10;
 `;
+
 interface WithClassName {
 	className?: string;
 }
-const MobileNavigation: React.FC<WithClassName> = ({className}) => {
+
+interface WithIntl {
+	intl?: any;
+}
+
+export const MobileNavigation: React.FC<WithClassName & WithIntl> = ({className, intl}) => {
 	return (
 		<Stage className={className}>
 			<Header>
@@ -94,8 +101,8 @@ const MobileNavigation: React.FC<WithClassName> = ({className}) => {
 						height: 65
 					}}>
 					<Stretch justify="flex-end">
-						<Link to="/services">Service</Link>
-						<Link to="/location">Location</Link>
+						<Link to={`/${intl.locale}/services`}>{intl.messages.services}</Link>
+						<Link to={`/${intl.locale}/location`}>{intl.messages.location}</Link>
 					</Stretch>
 					<HomeLink
 						to="/"
@@ -105,8 +112,8 @@ const MobileNavigation: React.FC<WithClassName> = ({className}) => {
 						<Logo />
 					</HomeLink>
 					<Stretch>
-						<Link to="/products/">Products</Link>
-						<Link to="/gallery/">Gallery</Link>
+						<Link to={`/${intl.locale}/products`}>{intl.messages.products}</Link>
+						<Link to={`/${intl.locale}/gallery`}>{intl.messages.gallery}</Link>
 					</Stretch>
 				</Nav>
 			</Header>
@@ -114,11 +121,11 @@ const MobileNavigation: React.FC<WithClassName> = ({className}) => {
 	);
 };
 
-const MainNavigation: React.FC<WithClassName> = ({className}) => {
+export const MainNavigation: React.FC<WithClassName & WithIntl> = ({className, intl}) => {
+	console.log(intl);
 	const {
 		components: {header, logo}
 	} = useTheme();
-	const {viewport} = useGrid();
 	const scrollY = useScrollY();
 	const minSizeDiff = header.height - header.minHeight;
 	const offset = header.height - minMax(0, minSizeDiff, scrollY);
@@ -132,8 +139,8 @@ const MainNavigation: React.FC<WithClassName> = ({className}) => {
 						height: offset
 					}}>
 					<Stretch justify="flex-end">
-						<Link to="/services">Service</Link>
-						<Link to="/location/">Location</Link>
+						<Link to={`/${intl.locale}/services`}>{intl.messages.services}</Link>
+						<Link to={`/${intl.locale}/location`}>{intl.messages.location}</Link>
 					</Stretch>
 					<HomeLink
 						to="/"
@@ -144,9 +151,9 @@ const MainNavigation: React.FC<WithClassName> = ({className}) => {
 						<Logo />
 					</HomeLink>
 					<Stretch>
-						<Link to="/products/">Products</Link>
-						<Link to="/gallery/">Gallery</Link>
-						<Link to="/blog/">Blog</Link>
+						<Link to={`/${intl.locale}/products`}>{intl.messages.products}</Link>
+						<Link to={`/${intl.locale}/gallery`}>{intl.messages.gallery}</Link>
+						<Link to={`/${intl.locale}/blog`}>{intl.messages.blog}</Link>
 					</Stretch>
 				</Nav>
 			</Header>
@@ -154,7 +161,7 @@ const MainNavigation: React.FC<WithClassName> = ({className}) => {
 	);
 };
 
-const StyledMobileNavigation = styled(MobileNavigation)`
+export const StyledMobileNavigation = styled(MobileNavigation)`
 	margin-bottom: 65px;
 	${({theme}) => css`
 		@media ${theme.grid.mq.m} {
@@ -162,7 +169,7 @@ const StyledMobileNavigation = styled(MobileNavigation)`
 		}
 	`};
 `;
-const StyledMainNavigation = styled(MainNavigation)`
+export const StyledMainNavigation = styled(MainNavigation)`
 	${({theme}) => css`
 		margin-bottom: ${theme.components.header.height}px;
 		display: none;
@@ -172,21 +179,13 @@ const StyledMainNavigation = styled(MainNavigation)`
 	`};
 `;
 
-const Navigation: React.FC = () => {
-	const {
-		components: {header, logo}
-	} = useTheme();
-	const {viewport} = useGrid();
-	const scrollY = useScrollY();
-	const minSizeDiff = header.height - header.minHeight;
-	const offset = viewport.mu ? header.height - minMax(0, minSizeDiff, scrollY) : 65;
-	const scale = offset / header.height;
+const Navigation: React.FC<WithIntl> = ({intl}) => {
 	return (
 		<Row>
-			<StyledMainNavigation />
-			<StyledMobileNavigation />
+			<StyledMainNavigation intl={intl} />
+			<StyledMobileNavigation intl={intl} />
 		</Row>
 	);
 };
 
-export default Navigation;
+export default injectIntl(Navigation);

@@ -9,6 +9,7 @@ import {Cover, GalleryImage} from "../components/cover";
 import {ParallaxBox} from "../components/parallax";
 import Helmet from "react-helmet";
 import FluidType from "../components/fluid-type";
+import {injectIntl} from "gatsby-plugin-intl";
 
 function ServicesIndex(props) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
@@ -30,7 +31,7 @@ function ServicesIndex(props) {
 								<Box alignSelf="center" removePadding>
 									<Spacing size="m" />
 									<ParallaxBox index={i}>
-										<Link to={`/services/${post.node.slug}`}>
+										<Link to={post.node.slug}>
 											<FluidType
 												as="h3"
 												minFontSize={20}
@@ -60,16 +61,16 @@ function ServicesIndex(props) {
 	);
 }
 
-export default ServicesIndex;
+export default injectIntl(ServicesIndex);
 
 export const pageQuery = graphql`
-	query ServicesIndexQuery {
+	query ServicesIndexQuery($locale: String) {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		allContentfulServices {
+		allContentfulServices(filter: {node_locale: {eq: $locale}}) {
 			edges {
 				node {
 					id

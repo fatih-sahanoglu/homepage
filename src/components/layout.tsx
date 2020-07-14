@@ -8,8 +8,7 @@ import {Column, Grid, GridProvider, Row} from "./grid";
 import {withPrefix} from "gatsby";
 import Helmet from "react-helmet";
 import {GRID} from "../theme/grid";
-import {Spacing} from "./spacing";
-import {Footer} from "./footer";
+import Footer from "./footer";
 
 const GlobalStyle = createGlobalStyle`
 	@font-face {

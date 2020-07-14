@@ -31,7 +31,7 @@ function BlogPostTemplate(props) {
 
 	return (
 		<Layout>
-			<Helmet title={`${post.name} | ${siteTitle}`} />
+			<Helmet title={`${post.title} | ${siteTitle}`} />
 			<Row>
 				<Column raw>
 					<Img alt={post.title} fluid={post.heroImage.fluid} />
@@ -79,13 +79,13 @@ function BlogPostTemplate(props) {
 export default BlogPostTemplate;
 
 export const pageQuery = graphql`
-	query BlogPostBySlug($slug: String!) {
+	query BlogPostBySlug($slug: String!, $locale: String) {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		contentfulBlogPost(slug: {eq: $slug}) {
+		contentfulBlogPost(slug: {eq: $slug}, node_locale: {eq: $locale}) {
 			title
 			publishDate(formatString: "MMMM Do, YYYY")
 			heroImage {

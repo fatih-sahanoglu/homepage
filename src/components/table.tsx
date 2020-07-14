@@ -6,12 +6,7 @@ export const Table = styled.table`
 `;
 export const Tbody = styled.tbody``;
 export const Tr = styled.tr`
-	background-image: linear-gradient(
-		to right,
-		rgba(0, 0, 0, 0),
-		rgba(0, 0, 0, 0.75),
-		rgba(0, 0, 0, 0)
-	);
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 	background-size: 100% 1px;
 	background-repeat: no-repeat;
 	background-position: center bottom;

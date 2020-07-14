@@ -1,0 +1,23 @@
+{
+	"services": "Services",
+	"location": "Location",
+	"products": "Products",
+	"seminars": "Seminars",
+	"gallery": "Gallery",
+	"blog": "Blog",
+	"gentlemen": "Gentlemen",
+	"ladies": "Ladies",
+	"youngsters": "Youngsters",
+	"beauty": "Beauty",
+	"contact": "Contact",
+	"imprint": "Imprint",
+	"price": "Price",
+	"participants": "Participants",
+	"tools": "Tools",
+	"duration": "Duration",
+	"openingHours": "Opening hours",
+	"notfound": {
+		"header": "NOT FOUND",
+		"description": "This page does not exist."
+	}
+}

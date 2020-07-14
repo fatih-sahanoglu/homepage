@@ -8,8 +8,9 @@ import {Cover, GalleryImage} from "../components/cover";
 import {ParallaxBox} from "../components/parallax";
 import Helmet from "react-helmet";
 import FluidType from "../components/fluid-type";
+import {injectIntl} from "gatsby-plugin-intl";
 
-function SeminarIndex(props) {
+function SeminarIndex({intl, ...props}) {
 	const siteTitle = get(props, "data.site.siteMetadata.title");
 	const posts = get(props, "data.allContentfulSeminar.edges");
 	return (
@@ -29,7 +30,7 @@ function SeminarIndex(props) {
 								<Box alignSelf="center" removePadding>
 									<Spacing size="m" />
 									<ParallaxBox index={i}>
-										<Link to={`/seminars/${post.node.slug}`}>
+										<Link to={post.node.slug}>
 											<FluidType
 												as="h3"
 												minFontSize={20}
@@ -59,16 +60,16 @@ function SeminarIndex(props) {
 	);
 }
 
-export default SeminarIndex;
+export default injectIntl(SeminarIndex);
 
 export const pageQuery = graphql`
-	query SeminarsIndexQuery {
+	query SeminarsIndexQuery($locale: String) {
 		site {
 			siteMetadata {
 				title
 			}
 		}
-		allContentfulSeminar {
+		allContentfulSeminar(filter: {node_locale: {eq: $locale}}) {
 			edges {
 				node {
 					id
