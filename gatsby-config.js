@@ -45,7 +45,7 @@ module.exports = {
 			resolve: `gatsby-plugin-intl`,
 			options: {
 				// language JSON resource path
-				path: path.resolve(__dirname, "/src/intl"),
+				path: `${__dirname}/src/intl`,
 				// supported language
 				languages: ["en-US", "de-DE"],
 				// language file path
