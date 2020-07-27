@@ -1,6 +1,7 @@
 require("dotenv").config({
 	path: `.env.${process.env.NODE_ENV}`
 });
+const path = require("path");
 
 const contentfulConfig = {
 	spaceId: process.env.CONTENTFUL_SPACE_ID,
@@ -44,12 +45,12 @@ module.exports = {
 			resolve: `gatsby-plugin-intl`,
 			options: {
 				// language JSON resource path
-				path: `${__dirname}/src/intl`,
+				path: path.resolve(__dirname, "/src/intl"),
 				// supported language
 				languages: ["en-US", "de-DE"],
 				// language file path
 				defaultLanguage: "en-US",
-				// option to redirect to `/en` when connecting `/`
+				// option to redirect to "en-US" when connecting "/"
 				redirect: true
 			}
 		},

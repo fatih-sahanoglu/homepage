@@ -14,7 +14,7 @@ const ArticlePreview = ({article, intl}) => (
 			</h3>
 		</Column>
 		<Column m={4}>
-			<Link to={article.slug}>
+			<Link to={`/${intl.locale}/blog/${article.slug}`}>
 				<Img alt="" fluid={article.heroImage.fluid} />
 			</Link>
 			<Spacing size="s" />
