@@ -182,7 +182,7 @@ export const components = {
 		return <CustomMap lat={location.lat} lon={location.lon} />;
 	},
 	ContentfulVideo: ({vimeo}) => {
-		return <Video video={vimeo} responsive loop autoplay controls={false} title={false} />;
+		return <Video video={vimeo} responsive loop title={false} />;
 	},
 	error: () => <div>Error</div>
 };
