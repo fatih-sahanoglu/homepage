@@ -40,7 +40,7 @@ function SeminarTemplate({intl, ...props}) {
 					</FluidType>
 					<Spacing size="l" />
 				</Column>
-				<Column l={8}>
+				<Column>
 					{images && (
 						<Box removeGutter removePadding>
 							<Carousel autoplay={post.autoplay}>
@@ -85,7 +85,7 @@ function SeminarTemplate({intl, ...props}) {
 						</Box>
 					)}
 				</Column>
-				<Column l={4} raw>
+				<Column raw>
 					<Box>
 						<Table>
 							<Tbody>

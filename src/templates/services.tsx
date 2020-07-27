@@ -39,7 +39,7 @@ function ServicesTemplate(props) {
 					</FluidType>
 					<Spacing size="l" />
 				</Column>
-				<Column l={8}>
+				<Column>
 					{images && (
 						<Box removeGutter removePadding>
 							<Carousel autoplay={autoplay}>
@@ -63,7 +63,7 @@ function ServicesTemplate(props) {
 						</Box>
 					)}
 				</Column>
-				<Column l={4} raw>
+				<Column raw>
 					<Table>
 						<Tbody>
 							{post.service.map(service => {
