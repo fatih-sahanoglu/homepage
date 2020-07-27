@@ -11,6 +11,7 @@ export interface ParallaxProps {
 
 const ParallaxWrapper = styled.div`
 	position: relative;
+	z-index: 1;
 `;
 
 const ParallaxInner = styled.div`
