@@ -1,5 +1,5 @@
 import styled, {css} from "styled-components";
-import {Column, Grid, PADDING, Row, Stage} from "./grid";
+import {Column, Grid, Row, Stage} from "./grid";
 import React from "react";
 import {Spacing} from "./spacing";
 import {graphql, Link, useStaticQuery} from "gatsby";

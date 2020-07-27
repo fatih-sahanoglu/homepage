@@ -6,6 +6,8 @@ interface VideoProps {
 	height?: number | string;
 	autopause?: boolean;
 	autoplay?: boolean;
+	title?: boolean;
+	controls?: boolean;
 	loop?: boolean;
 	muted?: boolean;
 	responsive?: boolean;
