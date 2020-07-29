@@ -14,8 +14,12 @@
 	"price": "Preis",
 	"participants": "Teilnehmer",
 	"tools": "Werkzeuge",
+	"changeLanguage": "Sprache ändern",
 	"duration": "Dauer",
 	"openingHours": "Öffnungszeiten",
+	"address": "Adresse",
+	"business": "Unternehmen",
+	"more": "Mehr",
 	"notfound": {
 		"header": "NICHT GEFUNDEN",
 		"description": "Diese Seite existiert nicht."

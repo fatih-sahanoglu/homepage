@@ -88,6 +88,7 @@ const ProductTemplate: React.FC = props => {
 						{tabEntries.map(([tab], index) => {
 							return (
 								<Tab
+									key={tab}
 									onClick={() => {
 										goTo(index);
 									}}
@@ -101,7 +102,7 @@ const ProductTemplate: React.FC = props => {
 					<Row raw>
 						{tabEntries.map(([, content], index) => {
 							return (
-								<Column>
+								<Column key={index}>
 									<TabContent selected={selected === index}>
 										<ReactMarkdown source={content} />
 									</TabContent>

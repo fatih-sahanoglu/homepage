@@ -3,11 +3,13 @@ import {Column, Grid, Row, Stage} from "./grid";
 import React from "react";
 import {Spacing} from "./spacing";
 import {graphql, Link, useStaticQuery} from "gatsby";
-import {injectIntl, IntlContextConsumer, changeLocale} from "gatsby-plugin-intl";
+import {changeLocale, injectIntl, IntlContextConsumer} from "gatsby-plugin-intl";
 import ReactMarkdown from "react-markdown";
 import {toPhone} from "../utils/number";
 import {DE} from "./flags/de";
 import {US} from "./flags/us";
+import {KellerkindLogo} from "./logo";
+import Kellerkind from "./kellerkind";
 
 const Nav = styled.nav`
 	display: flex;
@@ -65,7 +67,7 @@ const Social = styled.a`
 const LanguageLink = styled.button`
 	font-size: inherit;
 	border: 0;
-	padding: 0.5em;
+	padding: 0 0.25em;
 	margin: 0;
 	border-radius: 0;
 	appearance: none;
@@ -75,9 +77,6 @@ const LanguageLink = styled.button`
 	cursor: pointer;
 	background: none;
 	color: inherit;
-	${({disabled}) => css`
-		pointer-events: ${disabled ? "none" : "initial"};
-	`};
 `;
 
 const languageName = {
@@ -95,27 +94,30 @@ const Flag = styled.span`
 		flex: 1;
 	}
 `;
-
-const Language = () => (
-	<div>
-		<IntlContextConsumer>
-			{({languages, language: currentLocale}) =>
-				languages.map(language => (
-					<LanguageLink
-						key={language}
-						onClick={() => changeLocale(language)}
-						disabled={currentLocale === language}>
-						<Flag>{language === "de-DE" ? <DE /> : <US />}</Flag>
-					</LanguageLink>
-				))
-			}
-		</IntlContextConsumer>
-	</div>
-);
-
 interface WithIntl {
 	intl?: any;
 }
+const Language: React.FC<WithIntl> = ({intl}) => {
+	return (
+		<div>
+			{intl.messages.changeLanguage}:
+			<IntlContextConsumer>
+				{({languages, language: currentLocale}) =>
+					languages.map(language => (
+						<LanguageLink key={language} onClick={() => changeLocale(language)}>
+							{language === "de-DE" ? "DE" : "EN"}
+						</LanguageLink>
+					))
+				}
+			</IntlContextConsumer>
+		</div>
+	);
+};
+
+const Flexbox = styled.div`
+	display: flex;
+`;
+
 const Footer: React.FC<WithIntl> = ({intl}) => {
 	const {contentfulLocation: location} = useStaticQuery(graphql`
 		{
@@ -137,6 +139,9 @@ const Footer: React.FC<WithIntl> = ({intl}) => {
 				<Grid>
 					<Row>
 						<Column m={4} l={3} raw>
+							<h3>
+								{intl.messages.services} & {intl.messages.more}
+							</h3>
 							<Nav>
 								<Link to={`/${intl.locale}/services/gentlemen`}>
 									{intl.messages.gentlemen}
@@ -153,19 +158,19 @@ const Footer: React.FC<WithIntl> = ({intl}) => {
 								<Link to={`/${intl.locale}/seminars`}>
 									{intl.messages.seminars}
 								</Link>
-							</Nav>
-						</Column>
-						<Column m={4} l={3} raw>
-							<Nav>
 								<Link to={`/${intl.locale}/products`}>
 									{intl.messages.products}
 								</Link>
-								<Link to={`/${intl.locale}/gallery`}>{intl.messages.gallery}</Link>
-								<Link to={`/${intl.locale}/blog`}>{intl.messages.blog}</Link>
 							</Nav>
 						</Column>
 						<Column m={4} l={3} raw>
+							<h3>
+								{intl.messages.business} & {intl.messages.more}
+							</h3>
 							<Nav>
+								<Link to={`/${intl.locale}/gallery`}>{intl.messages.gallery}</Link>
+								<Link to={`/${intl.locale}/blog`}>{intl.messages.blog}</Link>
+
 								<Link to={`/${intl.locale}/location`}>
 									{intl.messages.location}
 								</Link>
@@ -174,25 +179,11 @@ const Footer: React.FC<WithIntl> = ({intl}) => {
 									{intl.messages.imprint}
 								</Link>
 							</Nav>
-							<Social
-								href="https://www.facebook.com/Fatih-Sahanoglucom-234829333300330"
-								target="_blank">
-								<Icon icon={IconType.facebook} />
-								<Hidden>Facebook</Hidden>
-							</Social>
-							<Social
-								href="https://www.instagram.com/fatih_sahanoglu/"
-								target="_blank">
-								<Icon icon={IconType.instagram} />
-								<Hidden>Instagram</Hidden>
-							</Social>
-							<Social href="https://vimeo.com/user85813888" target="_blank">
-								<Icon icon={IconType.vimeo} />
-								<Hidden>Vimeo</Hidden>
-							</Social>
 						</Column>
 						<Column m={4} l={3} raw>
-							<Language />
+							<h3>
+								{intl.messages.address} & {intl.messages.more}
+							</h3>
 							<div>
 								<a href={`tel:${toPhone(location.telephone)}`}>
 									{location.telephone}
@@ -201,6 +192,30 @@ const Footer: React.FC<WithIntl> = ({intl}) => {
 							<ReactMarkdown
 								source={location.address.childMarkdownRemark.rawMarkdownBody}
 							/>
+							<div>
+								<Social
+									href="https://www.facebook.com/Fatih-Sahanoglucom-234829333300330"
+									target="_blank">
+									<Icon icon={IconType.facebook} />
+									<Hidden>Facebook</Hidden>
+								</Social>
+								<Social
+									href="https://www.instagram.com/fatih_sahanoglu/"
+									target="_blank">
+									<Icon icon={IconType.instagram} />
+									<Hidden>Instagram</Hidden>
+								</Social>
+								<Social href="https://vimeo.com/user85813888" target="_blank">
+									<Icon icon={IconType.vimeo} />
+									<Hidden>Vimeo</Hidden>
+								</Social>
+							</div>
+						</Column>
+						<Column m={4} l={3} raw>
+							<h3>
+								<Language intl={intl} />
+							</h3>
+							<KellerkindLogo style={{fontSize: "10em"}} />
 						</Column>
 					</Row>
 				</Grid>

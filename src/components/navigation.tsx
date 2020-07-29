@@ -3,7 +3,7 @@ import {Link as GatsbyLink} from "gatsby";
 import {PADDING, Row, Stage, useGrid} from "./grid";
 import styled, {css} from "styled-components";
 import {Spacing} from "./spacing";
-import {Logo} from "./logo";
+import {KellerkindLogo, Logo} from "./logo";
 import {minMax} from "../utils/number";
 import {useTheme} from "../theme/theme";
 import {injectIntl} from "gatsby-plugin-intl";
@@ -122,7 +122,6 @@ export const MobileNavigation: React.FC<WithClassName & WithIntl> = ({className,
 };
 
 export const MainNavigation: React.FC<WithClassName & WithIntl> = ({className, intl}) => {
-	console.log(intl);
 	const {
 		components: {header, logo}
 	} = useTheme();
@@ -148,7 +147,7 @@ export const MainNavigation: React.FC<WithClassName & WithIntl> = ({className, i
 							fontSize: logo.size,
 							transform: `scale3d(${scale}, ${scale}, 1)`
 						}}>
-						<Logo />
+						<KellerkindLogo />
 					</HomeLink>
 					<Stretch>
 						<Link to={`/${intl.locale}/products`}>{intl.messages.products}</Link>

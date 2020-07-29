@@ -14,8 +14,12 @@
 	"price": "Price",
 	"participants": "Participants",
 	"tools": "Tools",
+	"changeLanguage": "Change language",
 	"duration": "Duration",
 	"openingHours": "Opening hours",
+	"address": "Address",
+	"business": "Business",
+	"more": "More",
 	"notfound": {
 		"header": "NOT FOUND",
 		"description": "This page does not exist."
